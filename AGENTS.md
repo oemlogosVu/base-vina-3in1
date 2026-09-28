@@ -80,6 +80,10 @@ Dùng chung thì đưa vào src/shared.
   Kết nối: Vercel CLI qua `npx vercel` (đăng nhập sẵn trên máy). Luôn thêm `--scope trieu-vu`.
 - Project mới: `base-vina-3in1` — tạo ở Giai đoạn 0 (sau khi chủ dự án duyệt tạo repo GitHub),
   KHÔNG dùng lại project cũ.
+- Repo GitHub: `oemlogosVu/base-vina-3in1` (riêng tư, tạo 28/09/2026). Claude Design được kết nối vào repo này:
+  CHỈ làm trên nhánh riêng + mở Pull Request, KHÔNG đẩy thẳng `main`. Agent kiểm tra PR (tsc, build,
+  không thêm thư viện, không modal ở Tài chính, không đụng logic tiền/lương/duyệt chi) trước khi chủ dự án gộp.
+  KHÔNG kết nối Claude Design vào 3 repo cũ (còn file chứa mật khẩu).
 ### Cách dùng kết nối
 - Đầu mỗi phiên: `npx vercel whoami` để kiểm tra kết nối. Không tạo token mới, không in token,
   không ghi token vào repo/file.

@@ -45,4 +45,11 @@
 
 **Còn chờ**
 - Chủ dự án: chạy sao lưu, xử lý bí mật B1–B8, chốt tên/domain/gói/màu.
-- Duyệt: commit đầu tiên, tạo repo GitHub riêng tư `base-vina-3in1`, tạo project Vercel `base-vina-3in1`.
+- Duyệt: tạo project Vercel `base-vina-3in1`.
+
+## 28/09/2026 — Tạo repo GitHub (chủ dự án duyệt)
+- Tạo repo riêng tư `oemlogosVu/base-vina-3in1`, commit đầu `38b40f3` (tài liệu + script, đã quét không có bí mật), push `main`.
+- Quy tắc: Claude Design chỉ gửi Pull Request, không đẩy thẳng `main` (ghi vào AGENTS.md mục 5).
+- Chưa khoá nhánh `main` trên GitHub (thao tác tự động bị máy chặn) → chủ dự án tự bật trên trang GitHub.
+- Phát hiện: repo GitHub cũ còn file chứa mật khẩu — Tài chính `docs/TIEN_DO.md`, Nhân sự `scripts/kiem-tra-rls-*.mjs` (5 file).
+  KHÔNG kết nối Claude Design vào 3 repo cũ. Cần đổi các mật khẩu này (xem GĐ0 mục B3).
