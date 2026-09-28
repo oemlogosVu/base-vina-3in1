@@ -1,0 +1,1122 @@
+@import "tailwindcss";
+
+/*
+ * HỆ THỐNG THIẾT KẾ — bảng màu theo bản chủ dự án đã duyệt (18/07/2026),
+ * bộ thành phần theo bản thiết kế lại đợt 1 (15/09/2026):
+ * design_handoff_thu_chi/PROMPT.md mục 2–3, trang /design-system bày đủ biến thể.
+ *
+ * Dùng qua Tailwind: bg-navy, text-muc, border-vien, bg-xanh-nen...
+ * Đổi màu thì đổi ở ĐÂY, không rải hex khắp component.
+ */
+
+:root {
+  /* KHÓA giao diện sáng có chủ đích (quyết định Phase 0): app tài chính cần màu
+     nhất quán khi đọc số tiền. `only light` = mức mạnh nhất: cấm trình duyệt tự
+     ép tối/đảo màu (nguyên nhân nút navy đổi màu làm chìm chữ trên máy tối). */
+  color-scheme: only light;
+  --nen: #f3f5f7;          /* nền trang, ngả xanh nhẹ */
+  --giay: #ffffff;         /* mặt thẻ */
+  --navy: #1f3a5c;         /* màu nhấn: nút chính, tab đang chọn, link */
+  --navy-dam: #16293f;     /* hover, tiêu đề đậm */
+  --muc: #1b2430;          /* chữ chính */
+  --muc-phu: #42526b;      /* chữ phụ */
+  --muc-nhat: #5a6b7c;     /* chữ mờ, nhãn */
+  --muc-mo: #8b99a7;       /* mờ hơn nữa */
+  --vien: #d6dde4;         /* viền */
+  --vien-dam: #c3cdd7;     /* viền đậm (nút phụ) */
+  --xanh: #1f7a45;         /* xanh lá: tiền vào, đã trả */
+  --xanh-nen: #e2f2e7;
+  --do: #b3372e;           /* đỏ trầm: cảnh báo, từ chối */
+  --do-nen: #f9e5e3;
+  --do-vien: #e4b7b2;
+  --vang: #b07c10;         /* hổ phách: đang duyệt */
+  --vang-chu: #8a6410;
+  --vang-nen: #fbf3db;
+  --xam-nen: #e8ecf0;      /* pill nháp */
+  --dong: #3a4550;         /* pill đã đóng */
+  --tieu-diem: #2e5a8f;    /* vòng focus */
+}
+
+/*
+ * KHÔNG tự bật giao diện tối theo hệ điều hành.
+ *
+ * Vì sao bỏ `@media (prefers-color-scheme: dark)`: bản màu tối chỉ "suy từ cùng
+ * bộ màu", CHƯA kiểm tương phản. Khi tối, --navy đổi sang xanh NHẠT (#6ea8e0)
+ * nhưng mọi nút chính vẫn để chữ TRẮNG (bg-navy text-white / .nut) → chữ chìm
+ * gần mất (lỗi báo 25/07). Khóa sáng cho chắc, đúng quyết định gốc Phase 0.
+ *
+ * Vẫn giữ :root[data-theme="dark"] bên dưới: sau này muốn làm nút chuyển tối
+ * TỬ TẾ (kiểm tương phản từng nút) thì bật lại; hiện KHÔNG có gì đặt data-theme.
+ */
+:root[data-theme="dark"] {
+  --nen: #0e1620; --giay: #16222f; --navy: #6ea8e0; --navy-dam: #9fc4ea;
+  --muc: #e4eaf0; --muc-phu: #b3c1cf; --muc-nhat: #8b99a7; --muc-mo: #6a7887;
+  --vien: #26323f; --vien-dam: #3a4a5a; --xanh: #4dc494; --xanh-nen: #10241d;
+  --do: #ff8a80; --do-nen: #2a1614; --do-vien: #5c2b2e; --vang: #d6a327;
+  --vang-chu: #e0b84a; --vang-nen: #241d0e; --xam-nen: #1e2a37; --dong: #2c3845;
+  --tieu-diem: #6ea8e0;
+}
+:root[data-theme="light"] {
+  --nen: #f3f5f7; --giay: #ffffff; --navy: #1f3a5c; --navy-dam: #16293f;
+  --muc: #1b2430; --muc-phu: #42526b; --muc-nhat: #5a6b7c; --muc-mo: #8b99a7;
+  --vien: #d6dde4; --vien-dam: #c3cdd7; --xanh: #1f7a45; --xanh-nen: #e2f2e7;
+  --do: #b3372e; --do-nen: #f9e5e3; --do-vien: #e4b7b2; --vang: #b07c10;
+  --vang-chu: #8a6410; --vang-nen: #fbf3db; --xam-nen: #e8ecf0; --dong: #3a4550;
+  --tieu-diem: #2e5a8f;
+}
+
+@theme inline {
+  --font-sans: var(--font-be-vietnam);
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  --color-nen: var(--nen);
+  --color-giay: var(--giay);
+  --color-navy: var(--navy);
+  --color-navy-dam: var(--navy-dam);
+  --color-muc: var(--muc);
+  --color-muc-phu: var(--muc-phu);
+  --color-muc-nhat: var(--muc-nhat);
+  --color-muc-mo: var(--muc-mo);
+  --color-vien: var(--vien);
+  --color-vien-dam: var(--vien-dam);
+  --color-xanh: var(--xanh);
+  --color-xanh-nen: var(--xanh-nen);
+  --color-do: var(--do);
+  --color-do-nen: var(--do-nen);
+  --color-do-vien: var(--do-vien);
+  --color-vang: var(--vang);
+  --color-vang-chu: var(--vang-chu);
+  --color-vang-nen: var(--vang-nen);
+  --color-xam-nen: var(--xam-nen);
+  --color-dong: var(--dong);
+}
+
+/*
+ * Nền tảng chung. Nằm trong @layer base (SAU preflight của Tailwind nên thắng
+ * nó) để class utility và class thành phần đè được — trước đây `a { color }` và
+ * `:focus-visible` nằm ngoài layer nên đè cả `text-*` trên link lẫn bo góc nút.
+ */
+@layer base {
+  body {
+    background: #f3f5f7;
+    color: #1b2430;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: #1f3a5c; }
+
+  :focus-visible {
+    outline: 3px solid #2e5a8f;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] { accent-color: #1f3a5c; }
+
+  summary { cursor: pointer; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ---------------------------------------------------------------------------
+ * BỘ THÀNH PHẦN — mỗi class ứng với một component trong src/components/ui/.
+ *
+ * Hai quy tắc, đều vì điện thoại Android cũ của Chủ tịch và Kế toán trưởng:
+ *  1. MÀU GHI HEX CỐ ĐỊNH, không qua var() — máy cũ từng không phân giải được
+ *     biến màu (xem khối "BẢO HIỂM TRÌNH DUYỆT" cuối file).
+ *  2. Không :has(), không color-mix(), không nesting, không backdrop-filter.
+ *
+ * Đặt trong @layer components: nằm dưới lớp utilities, nên trang vẫn chỉnh
+ * được khoảng cách/kích thước bằng class Tailwind (w-full, mt-4, flex-1...).
+ * ------------------------------------------------------------------------- */
+@layer components {
+  /* Thẻ: LUÔN nền trắng, viền mảnh, bo 14. Không có thẻ trong suốt, không bóng. */
+  .the {
+    background: #ffffff;
+    border: 1px solid #d6dde4;
+    border-radius: 14px;
+  }
+
+  /* Chữ nhỏ viết hoa đầu nhóm ("CÁC MỤC TRONG ĐỢT"). */
+  .nhan-nhom {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #5a6b7c;
+  }
+
+  /* Số chứng từ: font đơn cách để các số thẳng cột. */
+  .so-ct {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 13px;
+  }
+
+  /* Số tiền: chữ số đều cột. Tiền vào xanh, tiền ra đỏ. */
+  .tien {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+  .tien-vao { color: #1f7a45; }
+  .tien-ra { color: #b3372e; }
+
+  /* ---- Pill trạng thái: 5 nhóm màu, LUÔN có chấm + chữ ----------------- */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+    background: #e8ecf0;
+    color: #42526b;
+  }
+  /* Chấm mặc định theo màu chữ — pill cũ còn dùng class bg- và text- vẫn đúng màu.
+     (Đừng viết dấu sao liền gạch chéo trong chú thích CSS: nó đóng chú thích
+     sớm và phần sau thành CSS rác — lỗi đã gặp 15/09.) */
+  .pill::before {
+    content: "";
+    flex: none;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .pill-xam { background: #e8ecf0; color: #42526b; }
+  .pill-xam::before { background: #5a6b7c; }
+  .pill-vang { background: #fbf3db; color: #8a6410; }
+  .pill-vang::before { background: #b07c10; }
+  .pill-xanh { background: #e2f2e7; color: #176035; }
+  .pill-xanh::before { background: #1f7a45; }
+  .pill-do { background: #f9e5e3; color: #8f2b24; }
+  .pill-do::before { background: #b3372e; }
+  .pill-dong { background: #3a4550; color: #ffffff; }
+  .pill-dong::before { background: #c3cdd7; }
+
+  /* ---- Nút: 4 biến thể + nút đặc đỏ, bo 12, chữ 700 ---------------------- */
+  .nut,
+  .nut-phu,
+  .nut-do,
+  .nut-chu,
+  .nut-do-dac {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 44px;
+    padding: 0 18px;
+    border: 1.5px solid transparent;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.25;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+  }
+  .nut:disabled,
+  .nut-phu:disabled,
+  .nut-do:disabled,
+  .nut-chu:disabled,
+  .nut-do-dac:disabled { cursor: not-allowed; }
+
+  /* Chính: cao 48, nền navy chữ trắng. */
+  .nut {
+    min-height: 48px;
+    padding: 0 20px;
+    font-size: 16px;
+    background: #1f3a5c;
+    border-color: #1f3a5c;
+    color: #ffffff;
+  }
+  .nut:hover:not(:disabled),
+  .nut:active:not(:disabled) { background: #16293f; border-color: #16293f; }
+  .nut:disabled { opacity: 0.5; }
+
+  /* Phụ: viền xám, chữ navy. */
+  .nut-phu {
+    background: #ffffff;
+    border-color: #c3cdd7;
+    color: #1f3a5c;
+  }
+  .nut-phu:hover:not(:disabled) { background: #f3f5f7; }
+  .nut-phu:active:not(:disabled) { background: #e8ecf0; border-color: #1f3a5c; color: #16293f; }
+  .nut-phu:disabled { border-color: #d6dde4; color: #8b99a7; }
+
+  /* Nguy hiểm: viền đỏ nhạt, chữ đỏ. */
+  .nut-do {
+    background: #ffffff;
+    border-color: #e4b7b2;
+    color: #b3372e;
+  }
+  .nut-do:hover:not(:disabled) { background: #f9e5e3; }
+  .nut-do:active:not(:disabled) { background: #f9e5e3; border-color: #b3372e; color: #8f2b24; }
+  .nut-do:disabled { border-color: #e8ecf0; color: #c3cdd7; }
+
+  /* Dạng chữ: không viền, không nền. */
+  .nut-chu {
+    padding: 0 12px;
+    background: transparent;
+    color: #1f3a5c;
+  }
+  .nut-chu:hover:not(:disabled),
+  .nut-chu:active:not(:disabled) { background: #e8ecf0; color: #16293f; }
+  .nut-chu:disabled { color: #c3cdd7; }
+
+  /* Đặc đỏ: CHỈ cho nút xác nhận cuối trong khối xác nhận tại chỗ. */
+  .nut-do-dac {
+    background: #b3372e;
+    border-color: #b3372e;
+    color: #ffffff;
+  }
+  .nut-do-dac:hover:not(:disabled),
+  .nut-do-dac:active:not(:disabled) { background: #8f2b24; border-color: #8f2b24; }
+  .nut-do-dac:disabled { opacity: 0.5; }
+
+  /* Đang xử lý: giữ màu đậm, không mờ như vô hiệu. */
+  .nut[aria-busy="true"] { opacity: 1; background: #16293f; border-color: #16293f; }
+  .nut-do-dac[aria-busy="true"] { opacity: 1; background: #8f2b24; border-color: #8f2b24; }
+
+  /* Cỡ nhỏ 36px — CHỈ dùng trên máy tính. */
+  .nut-nho {
+    min-height: 36px;
+    padding: 0 14px;
+    font-size: 14px;
+  }
+
+  /* Vòng xoay "đang xử lý" 15px. */
+  .xoay {
+    flex: none;
+    width: 15px;
+    height: 15px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: xoay 0.8s linear infinite;
+  }
+
+  /* ---- Ô nhập: ô gốc của trình duyệt, chỉ tạo kiểu khung ----------------- */
+  .nhan-o {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #42526b;
+  }
+  .dau-bat-buoc { color: #b3372e; }
+
+  .o-nhap {
+    display: block;
+    width: 100%;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid #c3cdd7;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #1b2430;
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 1.3;
+  }
+  select.o-nhap { padding: 0 12px; }
+  textarea.o-nhap {
+    min-height: 80px;
+    padding: 10px 12px;
+    line-height: 1.5;
+    resize: vertical;
+  }
+  .o-nhap:focus { border-color: #2e5a8f; }
+  .o-nhap-loi,
+  .o-nhap[aria-invalid="true"] { border: 1.5px solid #b3372e; }
+  .o-nhap:disabled {
+    background: #f3f5f7;
+    border-color: #d6dde4;
+    color: #8b99a7;
+  }
+  /* Ô trong bảng trên máy tính: thấp hơn, bo 8. */
+  .o-nhap-nho {
+    min-height: 40px;
+    padding: 0 10px;
+    border-radius: 8px;
+    font-size: 15px;
+  }
+
+  /* Ô tiền: số căn phải, đậm, hậu tố "đ" đứng yên bên phải. */
+  .o-tien-khung { position: relative; }
+  .o-tien {
+    padding-right: 42px;
+    text-align: right;
+    font-size: 18px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .o-nhap-nho.o-tien { padding-right: 32px; font-size: 15px; }
+  .o-tien-khung .hau-to {
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #5a6b7c;
+    pointer-events: none;
+  }
+  .o-nhap-nho + .hau-to { right: 10px; font-size: 14px; }
+
+  /* Gợi ý: tối đa một dòng ngắn dưới ô. */
+  .goi-y {
+    margin-top: 6px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #5a6b7c;
+  }
+  .dong-loi {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #b3372e;
+  }
+  .dong-loi svg { flex: none; }
+
+  /* Khung chọn tệp — bọc ngoài <input type="file"> gốc. */
+  .khung-tep {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px dashed #c3cdd7;
+    border-radius: 10px;
+    background: #f3f5f7;
+    color: #5a6b7c;
+  }
+  .khung-tep svg { flex: none; }
+  .khung-tep input {
+    width: 100%;
+    min-width: 0;
+    font-family: inherit;
+    font-size: 13px;
+    color: #1b2430;
+  }
+
+  /* Ô tích lớn 22px. */
+  .o-tich { flex: none; width: 22px; height: 22px; }
+
+  /* Dòng mở rộng tại chỗ bằng <details> gốc — thay cho tooltip / popup. */
+  .mo-rong > summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1f3a5c;
+  }
+  .mo-rong > summary::-webkit-details-marker { display: none; }
+  .mo-rong > summary .mui-ten { transition: transform 0.15s; }
+  .mo-rong[open] > summary .mui-ten { transform: rotate(180deg); }
+
+  /* ---- Bảng (máy tính) ---------------------------------------------------- */
+  .bang {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+  .bang th {
+    padding: 11px 14px;
+    background: #e8ecf0;
+    color: #42526b;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .bang td {
+    padding: 12px 14px;
+    border-top: 1px solid #e8ecf0;
+    vertical-align: middle;
+  }
+  .bang tbody tr:nth-child(even) { background: #f3f5f7; }
+  .bang .cot-tien {
+    text-align: right;
+    font-size: 16px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .bang th.cot-tien { font-size: 12px; }
+
+  /* Bảng GỌN — dùng kèm `.bang` cho bảng nhiều cột (sao kê).
+     `table-layout: fixed` + bề rộng cột đặt bằng <colgroup> là CAM KẾT không
+     tràn: trình duyệt chia cột theo đúng tỷ lệ đã khai, không nong ra theo nội
+     dung. Trước đó bảng sao kê tự nong theo ba cột tiền nowrap nên máy tính vẫn
+     phải trượt ngang (báo 19/09). Đệm và cỡ chữ nhỏ hơn một nấc để cột diễn giải
+     còn chỗ thở. */
+  .bang-gon { table-layout: fixed; }
+  .bang-gon th,
+  .bang-gon td { padding: 9px 8px; }
+  .bang-gon .cot-tien { font-size: 15px; }
+  .bang-gon .dong-tong .cot-tien { font-size: 16px; }
+  /* Chữ dài (diễn giải, số chứng từ) cắt bằng dấu ba chấm thay vì nong cột.
+     KHÔNG áp cho .cot-tien: số phải hiện đủ, cắt số là đọc sai tiền. */
+  .bang-gon .cat-chu {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .bang .dong-tong td {
+    border-top: 1px solid #c3cdd7;
+    background: #e8ecf0;
+    font-weight: 700;
+  }
+  .bang .dong-tong .cot-tien { font-size: 19px; }
+
+  /* ---- Khối xác nhận tại chỗ — thay cho MỌI popup ------------------------- */
+  .khoi-xac-nhan {
+    padding: 14px;
+    border: 1.5px solid #c3cdd7;
+    border-radius: 12px;
+    background: #f3f5f7;
+  }
+  .khoi-xac-nhan .cau-hoi {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1b2430;
+  }
+  .khoi-xac-nhan .he-qua {
+    margin-top: 4px;
+    font-size: 14px;
+    color: #42526b;
+  }
+  .khoi-xac-nhan-do { border-color: #e4b7b2; background: #f9e5e3; }
+  .khoi-xac-nhan-do .cau-hoi { color: #8f2b24; }
+
+  /* ---- Thông báo thành công / lỗi ---------------------------------------- */
+  .thong-bao {
+    display: flex;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 1px solid #d6dde4;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .thong-bao svg { flex: none; margin-top: 1px; }
+  .thong-bao-xanh { background: #e2f2e7; border-color: #bfe0ca; color: #176035; }
+  .thong-bao-xanh svg { color: #1f7a45; }
+  .thong-bao-do { background: #f9e5e3; border-color: #e4b7b2; color: #8f2b24; }
+  .thong-bao-do svg { color: #b3372e; }
+
+  /* ---- Ô số liệu (KPI) ---------------------------------------------------- */
+  .o-so-lieu { padding: 14px; }
+  .o-so-lieu .nhan { font-size: 13px; color: #5a6b7c; }
+  .o-so-lieu .so {
+    margin-top: 4px;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  /* ---- Thanh tiến độ ngân sách ------------------------------------------- */
+  .thanh-tien-do {
+    height: 10px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e8ecf0;
+  }
+  .thanh-tien-do > div { height: 10px; background: #1f7a45; }
+  .thanh-tien-do-vuot > div { background: #b3372e; }
+
+  /* ---- Trạng thái trống --------------------------------------------------- */
+  .trang-thai-trong {
+    padding: 22px 14px;
+    border: 1px dashed #c3cdd7;
+    border-radius: 14px;
+    background: #ffffff;
+    color: #8b99a7;
+    text-align: center;
+  }
+  .trang-thai-trong .chinh {
+    margin-top: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1b2430;
+  }
+  .trang-thai-trong .phu {
+    margin-top: 2px;
+    font-size: 13px;
+    color: #5a6b7c;
+  }
+
+  /* ---- Khung chờ tải: thanh xám tĩnh, KHÔNG nhấp nháy --------------------- */
+  .xuong { border-radius: 4px; background: #e8ecf0; }
+
+  /* ======================================================================
+   * KHUNG ỨNG DỤNG (PROMPT mục 4). Ẩn/hiện theo khổ màn bằng utility của
+   * Tailwind (lg:hidden, hidden lg:flex) — utility nằm lớp trên nên thắng
+   * `display` khai ở đây.
+   * ==================================================================== */
+
+  /* Ô logo "TC" trắng trên nền navy. */
+  .logo-tc {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #1f3a5c;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* Đầu trang điện thoại: navy, tên trang + "Tên người · Vai trò". */
+  .dau-trang {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 54px;
+    padding: 8px 16px;
+    background: #1f3a5c;
+    color: #ffffff;
+  }
+  .dau-trang .tieu-de { font-size: 16px; font-weight: 700; line-height: 1.25; }
+  .dau-trang .phu { font-size: 12px; line-height: 1.35; color: #c3cdd7; }
+
+  /* Thanh trên cùng máy tính: navy 56px, dính khi cuộn. */
+  .thanh-tren {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 56px;
+    padding: 0 20px;
+    background: #1f3a5c;
+    color: #ffffff;
+  }
+  .thanh-tren .logo-tc { width: 32px; height: 32px; font-size: 14px; }
+
+  /* Nút viền trên nền navy (Đăng xuất ở thanh trên). */
+  .nut-tren-nen-toi {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 36px;
+    padding: 0 12px;
+    border: 1.5px solid #2e5a8f;
+    border-radius: 10px;
+    background: transparent;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .nut-tren-nen-toi:hover { background: #16293f; }
+
+  /* Thanh bên máy tính: 248px, dính dưới thanh trên, tự cuộn nếu dài. */
+  .thanh-ben {
+    position: sticky;
+    top: 56px;
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    width: 248px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+    padding: 16px 12px;
+    background: #ffffff;
+    border-right: 1px solid #d6dde4;
+  }
+  .nhom-ben + .nhom-ben { margin-top: 18px; }
+  .nhan-nhom-ben {
+    margin-bottom: 6px;
+    padding-left: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #8b99a7;
+  }
+  .muc-ben {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-height: 44px;
+    padding: 0 10px;
+    border-radius: 10px;
+    color: #42526b;
+    font-size: 15px;
+    text-decoration: none;
+  }
+  .muc-ben svg { flex: none; }
+  .muc-ben:hover { background: #f3f5f7; }
+  .muc-ben[aria-current="page"] { background: #1f3a5c; color: #ffffff; font-weight: 600; }
+
+  /* Huy hiệu số việc chờ. Vàng dùng #8a6410 chứ không #b07c10: chữ trắng
+     trên #b07c10 không đủ tương phản (cùng lý do cấm nút chữ trắng nền vàng). */
+  .huy-hieu {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: #8a6410;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .huy-hieu-gap { background: #b3372e; }
+  .muc-ben .huy-hieu { margin-left: auto; }
+
+  .phien-ban {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12px;
+    color: #8b99a7;
+  }
+
+  /* Thanh tab dưới đáy điện thoại: tối đa 5 tab có biểu tượng. */
+  .thanh-tab {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 20;
+    display: flex;
+    padding: 6px 4px calc(14px + env(safe-area-inset-bottom));
+    background: #ffffff;
+    border-top: 1px solid #d6dde4;
+  }
+  .tab-duoi {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-width: 0;
+    min-height: 56px;
+    color: #5a6b7c;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .tab-duoi[aria-current="page"] { color: #1f3a5c; font-weight: 700; }
+  /* Gạch 20×3 dưới tab đang chọn — không chỉ dựa vào màu. */
+  .tab-duoi[aria-current="page"]::after {
+    content: "";
+    width: 20px;
+    height: 3px;
+    border-radius: 2px;
+    background: #1f3a5c;
+  }
+  .tab-duoi .khung-bieu-tuong { position: relative; display: block; }
+  .tab-duoi .huy-hieu { position: absolute; top: -6px; left: 14px; }
+
+  /* Dòng trong trang "Thêm": cao 52, biểu tượng navy, mũi tên phải. */
+  .dong-them {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 52px;
+    padding: 0 16px;
+    border: 0;
+    background: transparent;
+    color: #1b2430;
+    font-family: inherit;
+    font-size: 16px;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .dong-them + .dong-them,
+  .dong-them-vien { border-top: 1px solid #e8ecf0; }
+  .dong-them svg { flex: none; color: #1f3a5c; }
+  .dong-them .mui-phai { color: #8b99a7; }
+  .dong-them:hover { background: #f3f5f7; }
+  .dong-them-do,
+  .dong-them-do svg { color: #b3372e; }
+
+  /*
+   * Vùng nội dung. Trang CŨ (chưa dựng lại) giữ cột 768px như trước — kể cả trên
+   * máy tính, để form cũ không bị kéo giãn. Trang đã dựng lại theo bố cục máy
+   * tính gắn class `rong` ở thẻ ngoài cùng để dùng hết bề ngang.
+   */
+  .noi-dung > * { max-width: 768px; margin-right: auto; margin-left: auto; }
+  .noi-dung > .rong { max-width: none; }
+
+  /* ======================================================================
+   * MÀN HÌNH ĐỢT 1 — Nhóm A (đăng nhập, trang chủ, danh sách đề nghị...)
+   * ==================================================================== */
+
+  /* Ô logo lớn ở trang đăng nhập: navy, chữ trắng. */
+  .logo-lon {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    background: #1f3a5c;
+    color: #ffffff;
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  /* Ô biểu tượng 38px nền tint — đầu mỗi dòng "Việc cần làm". */
+  .o-bieu-tuong {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #e8ecf0;
+    color: #42526b;
+  }
+  .o-bieu-tuong-do { background: #f9e5e3; color: #b3372e; }
+  .o-bieu-tuong-vang { background: #fbf3db; color: #8a6410; }
+  .o-bieu-tuong-xanh { background: #e2f2e7; color: #1f7a45; }
+
+  /* Số đếm tròn 24px cuối dòng việc. Vàng dùng #8a6410 (đủ tương phản chữ trắng). */
+  .dem {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 7px;
+    border-radius: 999px;
+    background: #e8ecf0;
+    color: #42526b;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .dem-do { background: #b3372e; color: #ffffff; }
+  .dem-vang { background: #8a6410; color: #ffffff; }
+
+  /* Dòng bấm được trong thẻ danh sách (việc cần làm, số dư...). */
+  .dong-viec {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 64px;
+    padding: 12px 14px;
+    color: #1b2430;
+    text-decoration: none;
+  }
+  .dong-ds {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 48px;
+    padding: 12px 14px;
+    color: #1b2430;
+    text-decoration: none;
+  }
+  .dong-viec + .dong-viec,
+  .dong-ds + .dong-ds { border-top: 1px solid #e8ecf0; }
+  a.dong-viec:hover,
+  a.dong-ds:hover { background: #f3f5f7; }
+  .dong-viec .mui-phai { flex: none; color: #8b99a7; }
+  .dong-tong-ds { background: #f3f5f7; font-weight: 700; }
+
+  /* Thẻ việc trên máy tính (lưới 3 cột). Dùng kèm `.the`. */
+  .the-viec {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    color: #1b2430;
+    text-decoration: none;
+  }
+  .the-viec:hover { border-color: #c3cdd7; background: #fbfcfd; }
+  .the-viec .o-bieu-tuong { width: 40px; height: 40px; }
+  .the-viec .mui-phai { flex: none; margin-top: 4px; color: #8b99a7; }
+
+  /* Ô tìm kiếm có kính lúp bên trái. */
+  .o-tim { position: relative; }
+  .o-tim > svg {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: #8b99a7;
+    pointer-events: none;
+  }
+  .o-tim .o-nhap { padding-left: 40px; }
+
+  /* Nút nổi góc dưới phải (Lập đề nghị) — đứng trên thanh tab điện thoại. */
+  .nut-noi {
+    position: fixed;
+    right: 16px;
+    bottom: calc(88px + env(safe-area-inset-bottom));
+    z-index: 15;
+    min-height: 52px;
+    border-radius: 999px;
+    box-shadow: 0 1px 2px rgba(27, 36, 48, 0.06);
+  }
+
+  /* ---- Lập đề nghị ------------------------------------------------------- */
+
+  /* Ô chọn loại lớn kiểu radio: cao 52; ô đang chọn viền 2px navy + chấm đặc. */
+  .o-chon-loai {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-height: 52px;
+    padding: 10px 14px;
+    border: 1px solid #c3cdd7;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #42526b;
+    font-size: 16px;
+    text-decoration: none;
+  }
+  .o-chon-loai .cham-chon {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #c3cdd7;
+    border-radius: 50%;
+    background: #ffffff;
+  }
+  a.o-chon-loai:hover { border-color: #1f3a5c; }
+  .o-chon-loai[aria-current="true"] {
+    padding: 9px 13px;
+    border: 2px solid #1f3a5c;
+    color: #1b2430;
+    font-weight: 600;
+  }
+  .o-chon-loai[aria-current="true"] .cham-chon { border: 6px solid #1f3a5c; }
+
+  .tieu-de-muc { font-size: 14px; font-weight: 700; color: #16293f; }
+
+  /* "+ Thêm mục" viền đứt. */
+  .nut-them-muc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 48px;
+    border: 1.5px dashed #c3cdd7;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #1f3a5c;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .nut-them-muc:hover { border-color: #1f3a5c; }
+
+  /* Thanh "Tổng cộng" dính đáy trên điện thoại — đứng ngay trên thanh tab
+     (thanh tab cao 6 + 56 + 14px + vùng an toàn). Tràn ra sát hai mép màn. */
+  .thanh-day {
+    position: sticky;
+    bottom: calc(76px + env(safe-area-inset-bottom));
+    z-index: 10;
+    margin: 0 -16px;
+    padding: 12px 16px 14px;
+    background: #ffffff;
+    border-top: 1px solid #c3cdd7;
+    box-shadow: 0 -1px 2px rgba(27, 36, 48, 0.06);
+  }
+
+  /* Cột phải dính khi cuộn (máy tính) — dưới thanh trên 56px. */
+  .cot-dinh { position: sticky; top: 80px; }
+
+  /* Tệp đã đính / đã chọn. */
+  .tep-dinh {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid #d6dde4;
+    border-radius: 10px;
+    background: #f3f5f7;
+    font-size: 14px;
+  }
+  .tep-dinh svg { flex: none; color: #5a6b7c; }
+  .nut-bo-tep {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    margin: -8px -8px -8px 0;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #b3372e;
+    cursor: pointer;
+  }
+  .nut-bo-tep svg { color: #b3372e; }
+  .nut-bo-tep:hover { background: #f9e5e3; }
+
+  /* ---- Chi tiết đề nghị: dòng thời gian ---------------------------------- */
+  .moc { display: flex; gap: 12px; }
+  .moc-truc {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+    width: 22px;
+  }
+  .moc-cham {
+    flex: none;
+    width: 11px;
+    height: 11px;
+    margin-top: 5px;
+    border-radius: 50%;
+    background: #1f7a45;
+  }
+  .moc-cho .moc-cham { background: #b07c10; }
+  .moc-do .moc-cham { background: #b3372e; }
+  .moc-chua .moc-cham { background: #e8ecf0; border: 2px solid #c3cdd7; }
+  .moc-noi { flex: 1; width: 2px; margin-top: 4px; background: #d6dde4; }
+  .moc:last-child .moc-noi { display: none; }
+  .moc-than { flex: 1; min-width: 0; padding-bottom: 16px; }
+  .moc:last-child .moc-than { padding-bottom: 0; }
+  .moc-tieu-de { font-size: 15px; font-weight: 600; color: #1b2430; }
+  .moc-cho .moc-tieu-de { font-weight: 700; color: #8a6410; }
+  .moc-do .moc-tieu-de { color: #8f2b24; }
+  .moc-chua .moc-tieu-de { font-weight: 400; color: #8b99a7; }
+  .moc-phu { font-size: 13px; color: #5a6b7c; }
+  /* Ý kiến / lý do: khối trích dẫn viền trái 3px. */
+  .y-kien {
+    margin-top: 6px;
+    padding-left: 10px;
+    border-left: 3px solid #d6dde4;
+    font-size: 13px;
+    color: #42526b;
+  }
+
+  /* Dòng nhãn – giá trị (Thông tin chung). */
+  .dong-tt {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 0;
+    font-size: 15px;
+  }
+  .dong-tt + .dong-tt { border-top: 1px solid #e8ecf0; }
+  .dong-tt > :first-child { flex: none; color: #5a6b7c; }
+  .dong-tt > :last-child { min-width: 0; text-align: right; }
+
+  /* Khối phụ mở rộng tại chỗ bằng <details> — đóng sẵn. */
+  .khoi-phu > summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 52px;
+    padding: 0 14px;
+    list-style: none;
+    font-size: 15px;
+    color: #1b2430;
+  }
+  .khoi-phu > summary::-webkit-details-marker { display: none; }
+  .khoi-phu > summary > svg:first-child { flex: none; color: #5a6b7c; }
+  .khoi-phu + .khoi-phu { border-top: 1px solid #e8ecf0; }
+  .khoi-phu > summary .mui-ten { flex: none; color: #8b99a7; transition: transform 0.15s; }
+  .khoi-phu[open] > summary .mui-ten { transform: rotate(180deg); }
+  .khoi-phu > .ruot { padding: 0 14px 14px; }
+
+  /* ---- Duyệt & Chi tiền --------------------------------------------------- */
+
+  /* Chip lọc ("Chờ tôi duyệt · 5"). Đang chọn: nền navy chữ trắng. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: 999px;
+    background: #e8ecf0;
+    color: #42526b;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .chip[aria-current="page"] { background: #1f3a5c; color: #ffffff; font-weight: 700; }
+
+  /* Số thứ tự "Đợt 3/3" của Chủ tịch. */
+  .chip-dem {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: #1f3a5c;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  /* Thẻ đang được chọn (mục KTT tích, đợt đang trả tiền). */
+  .the-chon { border: 1.5px solid #1f3a5c; }
+
+  /* Ô số tiền bị KTT giảm so với đề nghị: viền vàng. */
+  .o-nhap.o-giam { border: 1.5px solid #b07c10; }
+
+  /* Dòng bảng đang chọn. */
+  .bang tbody tr.dong-chon td { background: #e8ecf0; }
+
+  /* Hàng đợt trong cột trái của Chủ tịch (máy tính). */
+  .hang-dot {
+    display: block;
+    padding: 14px 18px;
+    border-left: 4px solid transparent;
+    color: #1b2430;
+    text-decoration: none;
+  }
+  .hang-dot + .hang-dot { border-top: 1px solid #e8ecf0; }
+  .hang-dot:hover { background: #f3f5f7; }
+  .hang-dot[aria-current="page"] { border-left-color: #1f3a5c; background: #f3f5f7; }
+}
+
+@keyframes xoay {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------------------------------------------------------------------------
+ * BẢO HIỂM TRÌNH DUYỆT — vì sao có khối này:
+ * Tailwind khai báo biến màu mặc định `--color-white` BÊN TRONG `@layer theme`.
+ * Vài trình duyệt điện thoại cũ không phân giải được biến nằm trong layer đó,
+ * nên `.text-white { color: var(--color-white) }` hỏng → chữ trắng trên nút navy
+ * biến mất (báo 25/07, máy Kế toán trưởng). Biến của mình (--navy...) nằm ở
+ * :root THƯỜNG nên nền nút vẫn hiện — chỉ chữ mất.
+ *
+ * Sửa: ghi đè bằng GIÁ TRỊ THẬT, KHÔNG qua var, KHÔNG trong layer (unlayered
+ * thắng mọi @layer). Giống hệt cách dải nhận diện phiên bản (màu cố định) vẫn
+ * hiện đúng trên chính máy đó. Đang khóa giao diện sáng nên navy luôn = #1f3a5c.
+ * ------------------------------------------------------------------------- */
+.text-white { color: #fff !important; }
+.bg-navy { background-color: #1f3a5c !important; }
