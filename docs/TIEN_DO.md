@@ -68,3 +68,14 @@
 - [ ] Chấm công tổ đội mặc định 1 công; bảng công đã xác nhận muốn sửa phải có lý do + nhật ký.
 - [ ] Ảnh selfie không dùng làm ảnh đại diện; nén ảnh trước khi gửi.
 - [ ] Kỳ lương đã chốt → tạo nháp đề nghị chi lương bên Tài chính (kế hoạch mục 3.6).
+
+## 28/09/2026 — Sao lưu + Vercel (chủ dự án duyệt)
+- Quyết định: KHÔNG đổi các mật khẩu bị lộ (chủ dự án chấp nhận rủi ro); Supabase gói **Free**.
+- Sao lưu vào `F:\SaoLuu_BaseVina`: Storage Tài chính `chung-tu` 153 file, Nhân sự `to-doi-cham-cong` 105 +
+  `chung-tu` 33 + `attendance-selfies` 0 (lỗi 0); ảnh Kho Vercel Blob 107 file (lỗi 0; token lấy tạm bằng
+  `vercel env pull` ra file tạm, đã xoá).
+- CHƯA sao lưu: database 2 project (máy chưa cài pg_dump 17, script cần chủ dự án gõ mật khẩu DB),
+  Google Sheet Kho (làm tay). Chưa chép bản sao lưu sang nơi thứ hai.
+- Tạo project Vercel `base-vina-3in1` (team trieu-vu), link repo này, nối GitHub `oemlogosVu/base-vina-3in1`.
+  `vercel.json`: region `sin1`, TẮT tự deploy khi push `main` (deploy production phải hỏi trước).
+  Nhánh khác vẫn tự tạo bản preview.
