@@ -53,3 +53,18 @@
 - Chưa khoá nhánh `main` trên GitHub (thao tác tự động bị máy chặn) → chủ dự án tự bật trên trang GitHub.
 - Phát hiện: repo GitHub cũ còn file chứa mật khẩu — Tài chính `docs/TIEN_DO.md`, Nhân sự `scripts/kiem-tra-rls-*.mjs` (5 file).
   KHÔNG kết nối Claude Design vào 3 repo cũ. Cần đổi các mật khẩu này (xem GĐ0 mục B3).
+
+## 28/09/2026 — Bộ giao diện chuẩn (Claude Design)
+- Claude Design dựng bộ giao diện trên claude.ai (không đẩy lên GitHub). Chép bản cố định vào
+  `design/he-thong-giao-dien/` (65 file, chỉ dữ liệu mẫu giả; nguồn + phiên bản ghi ở `NGUON.md`).
+- Chủ dự án duyệt: màu nhấn phương án B; không modal bắt buộc ở Tài chính/khung chung/Hệ thống, Nhân sự + Kho
+  giữ hộp thoại đến GĐ7 (Kho có 9 file, Nhân sự 2 file đang dùng hộp thoại); tính năng Nhân sự mới trong bản vẽ
+  (che CCCD/STK ở máy chủ, nhật ký xem dữ liệu nhạy cảm… — app Nhân sự hiện CHƯA có) để duyệt riêng sau GĐ6.
+
+**Danh sách chờ duyệt sau GĐ6 — tính năng Nhân sự mới từ bộ giao diện**
+- [ ] Che CCCD, số tài khoản (chỉ 4 số cuối) — máy chủ che theo quyền người xem.
+- [ ] Nhật ký mỗi lần xem đầy đủ lương / CCCD / số tài khoản.
+- [ ] Lương không hiện ở trang chủ, danh sách nhân viên, huy hiệu, thông báo, Telegram (kiểm tra app hiện tại).
+- [ ] Chấm công tổ đội mặc định 1 công; bảng công đã xác nhận muốn sửa phải có lý do + nhật ký.
+- [ ] Ảnh selfie không dùng làm ảnh đại diện; nén ảnh trước khi gửi.
+- [ ] Kỳ lương đã chốt → tạo nháp đề nghị chi lương bên Tài chính (kế hoạch mục 3.6).

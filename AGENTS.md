@@ -70,6 +70,10 @@ Dùng chung thì đưa vào src/shared.
   (--background, --primary…) không được khai báo ở :root.
 - Khung chung: sidebar desktop + tab bar dưới trên mobile; navy #1f3a5c; Be Vietnam Pro; chế độ sáng;
   nút ≥ 44px; phân hệ Tài chính KHÔNG dùng modal. Mỗi phân hệ 1 màu nhấn.
+- Chuẩn giao diện: `design/he-thong-giao-dien/` (đọc `NGUON.md` trước). Màu nhấn đã chốt (phương án B):
+  Tài chính `#1f3a5c` · Nhân sự `#6b3589` · Kho `#0a6379` · Hệ thống `#5a5048`.
+  Không modal: bắt buộc ở Tài chính, khung chung, trang chủ, Hệ thống. Nhân sự và Kho giữ hộp thoại cũ đến GĐ7.
+  Màn Nhân sự trong bộ giao diện là thiết kế mới → GĐ2 chỉ chép app cũ + đổi màu/font, KHÔNG thêm tính năng mới.
 - Phải chạy tốt trên Android cũ (Chủ tịch/KTT dùng điện thoại).
 - Giao diện, thông báo lỗi, chú thích nghiệp vụ bằng tiếng Việt.
 

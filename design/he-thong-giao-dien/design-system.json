@@ -1,0 +1,282 @@
+{
+ "v": 3,
+ "assetGroups": {
+  "Bieu-tuong-app": {
+   "files": {
+    "icon-192.png": {
+     "blob": "368f1385484cc2d236d86d087ea47d9e",
+     "name": "icon-192.png",
+     "size": 680,
+     "type": "image/png"
+    },
+    "icon-512-maskable.png": {
+     "blob": "f6c32a5addb6db34165a32698248b862",
+     "name": "icon-512-maskable.png",
+     "size": 2917,
+     "type": "image/png"
+    },
+    "icon-512.png": {
+     "blob": "9e3a7a7022e0a00981c6139825f91717",
+     "name": "icon-512.png",
+     "size": 3382,
+     "type": "image/png"
+    }
+   },
+   "name": "Bieu-tuong-app",
+   "order": [
+    "icon-192.png",
+    "icon-512.png",
+    "icon-512-maskable.png"
+   ],
+   "tile": "m"
+  },
+  "Icons": {
+   "files": {
+    "back.svg": {
+     "blob": "34285425f5ace009e8326202bc3a3efa",
+     "name": "back.svg",
+     "size": 259,
+     "type": "image/svg+xml"
+    },
+    "bank.svg": {
+     "blob": "6ffae9a47d9872816a18a6182e0c7fa8",
+     "name": "bank.svg",
+     "size": 322,
+     "type": "image/svg+xml"
+    },
+    "book.svg": {
+     "blob": "a578bb30070c83f7226126e5a296f49a",
+     "name": "book.svg",
+     "size": 338,
+     "type": "image/svg+xml"
+    },
+    "cal.svg": {
+     "blob": "7c0a817dd0a55372ee3a1754bf40faa7",
+     "name": "cal.svg",
+     "size": 276,
+     "type": "image/svg+xml"
+    },
+    "card.svg": {
+     "blob": "5543bb719eb54b60b78427498b5571e3",
+     "name": "card.svg",
+     "size": 285,
+     "type": "image/svg+xml"
+    },
+    "chart.svg": {
+     "blob": "35a7baf94a0ebc21b1206dc49cb46eb2",
+     "name": "chart.svg",
+     "size": 277,
+     "type": "image/svg+xml"
+    },
+    "check-sq.svg": {
+     "blob": "2a5e2f229ca711f942eb02cabd4107ad",
+     "name": "check-sq.svg",
+     "size": 272,
+     "type": "image/svg+xml"
+    },
+    "check.svg": {
+     "blob": "61302bd8e3b6e7883dfd493639407581",
+     "name": "check.svg",
+     "size": 236,
+     "type": "image/svg+xml"
+    },
+    "clip.svg": {
+     "blob": "fe4d29fac9e72dd758c52e6e291eefeb",
+     "name": "clip.svg",
+     "size": 319,
+     "type": "image/svg+xml"
+    },
+    "clock.svg": {
+     "blob": "6b2eecb5a723590324f109123ad14e0f",
+     "name": "clock.svg",
+     "size": 262,
+     "type": "image/svg+xml"
+    },
+    "cog.svg": {
+     "blob": "588b4e3b4eb393579ab3ff642d8a2936",
+     "name": "cog.svg",
+     "size": 361,
+     "type": "image/svg+xml"
+    },
+    "down-tray.svg": {
+     "blob": "0fe6aceb31d192b7b1ce038ba206148e",
+     "name": "down-tray.svg",
+     "size": 289,
+     "type": "image/svg+xml"
+    },
+    "down.svg": {
+     "blob": "f8b6ee1a273d93f984da8d322fb998c4",
+     "name": "down.svg",
+     "size": 238,
+     "type": "image/svg+xml"
+    },
+    "file.svg": {
+     "blob": "355f9725806995cace021cb2a3d50d26",
+     "name": "file.svg",
+     "size": 301,
+     "type": "image/svg+xml"
+    },
+    "filter.svg": {
+     "blob": "cc50dfe484547a2bedf0ffc0c78710c0",
+     "name": "filter.svg",
+     "size": 253,
+     "type": "image/svg+xml"
+    },
+    "folder.svg": {
+     "blob": "1186ae500ed135c01758df6779875899",
+     "name": "folder.svg",
+     "size": 247,
+     "type": "image/svg+xml"
+    },
+    "home.svg": {
+     "blob": "ff2860071e513c4f52100669f53a27d7",
+     "name": "home.svg",
+     "size": 298,
+     "type": "image/svg+xml"
+    },
+    "key.svg": {
+     "blob": "275dba2cc011f7a4a3773fac7b754e49",
+     "name": "key.svg",
+     "size": 284,
+     "type": "image/svg+xml"
+    },
+    "more.svg": {
+     "blob": "3f6d315a4725f0845648875af55aa5ea",
+     "name": "more.svg",
+     "size": 237,
+     "type": "image/svg+xml"
+    },
+    "out.svg": {
+     "blob": "d14e4bca50da89ae94f1820de99544e7",
+     "name": "out.svg",
+     "size": 293,
+     "type": "image/svg+xml"
+    },
+    "pencil.svg": {
+     "blob": "a165aaa250b1c7570831ad2d9ac1074f",
+     "name": "pencil.svg",
+     "size": 255,
+     "type": "image/svg+xml"
+    },
+    "plus.svg": {
+     "blob": "8875705d53756aeade40b19d026360e1",
+     "name": "plus.svg",
+     "size": 230,
+     "type": "image/svg+xml"
+    },
+    "right.svg": {
+     "blob": "8ac29e9f7549db1699765295f4498bda",
+     "name": "right.svg",
+     "size": 238,
+     "type": "image/svg+xml"
+    },
+    "search.svg": {
+     "blob": "dd35d58ed31242bf6fb8c898dcc19b5a",
+     "name": "search.svg",
+     "size": 269,
+     "type": "image/svg+xml"
+    },
+    "swap.svg": {
+     "blob": "b3ce0ff7ee9797f60270d97530b4809b",
+     "name": "swap.svg",
+     "size": 317,
+     "type": "image/svg+xml"
+    },
+    "table.svg": {
+     "blob": "a47d9a17c8a30c2ec5fc045f1e72b5ca",
+     "name": "table.svg",
+     "size": 302,
+     "type": "image/svg+xml"
+    },
+    "trash.svg": {
+     "blob": "8634ac51c995fdd61fa37a3a07a557b4",
+     "name": "trash.svg",
+     "size": 299,
+     "type": "image/svg+xml"
+    },
+    "users.svg": {
+     "blob": "906167233b07444c51a184ce1844391b",
+     "name": "users.svg",
+     "size": 355,
+     "type": "image/svg+xml"
+    },
+    "wallet.svg": {
+     "blob": "2bc2628c29ec6ec7d3836dc464030f4a",
+     "name": "wallet.svg",
+     "size": 292,
+     "type": "image/svg+xml"
+    },
+    "warn.svg": {
+     "blob": "2436bd8688633aa41a552e1db93090d6",
+     "name": "warn.svg",
+     "size": 266,
+     "type": "image/svg+xml"
+    },
+    "x.svg": {
+     "blob": "7d779c5aaa0263498a62ea286a30f7e3",
+     "name": "x.svg",
+     "size": 232,
+     "type": "image/svg+xml"
+    }
+   },
+   "name": "Icons",
+   "order": [
+    "home.svg",
+    "file.svg",
+    "wallet.svg",
+    "check-sq.svg",
+    "card.svg",
+    "more.svg",
+    "search.svg",
+    "plus.svg",
+    "trash.svg",
+    "right.svg",
+    "down.svg",
+    "back.svg",
+    "clip.svg",
+    "cog.svg",
+    "users.svg",
+    "chart.svg",
+    "swap.svg",
+    "down-tray.svg",
+    "warn.svg",
+    "clock.svg",
+    "check.svg",
+    "x.svg",
+    "folder.svg",
+    "bank.svg",
+    "out.svg",
+    "key.svg",
+    "cal.svg",
+    "pencil.svg",
+    "filter.svg",
+    "book.svg",
+    "table.svg"
+   ],
+   "tile": "xs"
+  }
+ },
+ "blobs": {},
+ "createdOnFiles": {
+  "at": "2026-09-28T04:09:50Z",
+  "v": 1
+ },
+ "docs": {
+  "sections": []
+ },
+ "groups": [
+  "Icons",
+  "Bieu-tuong-app"
+ ],
+ "lastChange": {
+  "by": "Triệu Vũ",
+  "at": "2026-09-28T04:36:11Z",
+  "via": "Cowork",
+  "note": "Chốt màu nhấn phương án B (Nhân sự chỉnh mận → tím #6b3589); thêm mục Nhân sự và 4 màn: chấm công cá nhân, chấm công tổ đội, kỳ lương, hồ sơ"
+ },
+ "layout": "files",
+ "libraries": [],
+ "namespace": "BaseVina",
+ "sections": {},
+ "title": "Base Vina 3 in 1"
+}
