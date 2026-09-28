@@ -1,0 +1,41 @@
+# ---- Bí mật: KHÔNG BAO GIỜ commit ----
+.env
+.env*
+!.env.example
+*.pem
+*.key
+*.p12
+Telegram_info*
+*service-account*.json
+*credentials*.json
+auth.json
+
+# ---- Bản sao lưu / dữ liệu thật (chứa thông tin cá nhân, hash mật khẩu) ----
+*.dump
+*.sql.gz
+*.xlsx
+*.xls
+*.csv
+SaoLuu*/
+backup*/
+
+# ---- Next.js / Node ----
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+next-env.d.ts
+
+# ---- Vercel / Supabase cục bộ ----
+.vercel/
+supabase/.temp/
+supabase/.branches/
+
+# ---- Máy / công cụ ----
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+.claude/settings.local.json
+.local/
