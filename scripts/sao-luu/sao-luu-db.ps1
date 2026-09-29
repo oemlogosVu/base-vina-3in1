@@ -8,7 +8,9 @@
       <ref>_cau-truc.sql  : chỉ cấu trúc, dạng chữ đọc được (để đối chiếu)
       <ref>_du-lieu.sql   : chỉ dữ liệu public/private/auth dạng chữ (phòng khi .dump lỗi)
     + file KIEM_TRA.txt ghi dung lượng, mã SHA256 và số đối tượng trong bản .dump.
-  - Mật khẩu DB được HỎI khi chạy, không lưu vào file, không in ra màn hình.
+  - Mật khẩu DB lấy từ biến môi trường User (SUPABASE_DB_PASSWORD_TAICHINH / SUPABASE_DB_PASSWORD),
+    không có thì HỎI khi chạy; không lưu vào file, không in ra màn hình.
+  - -ChiProject TaiChinh|NhanSu : chỉ sao lưu 1 project.
 
   YÊU CẦU: pg_dump bản 17 (xem docs/SAO_LUU.md mục 1).
   CÁCH CHẠY (PowerShell):
@@ -17,21 +19,24 @@
   LƯU Ý: bản sao lưu chứa dữ liệu cá nhân + lương + hash mật khẩu → KHÔNG để trong OneDrive/repo.
 #>
 param(
-  [string]$ThuMuc = "F:\SaoLuu_BaseVina"
+  [string]$ThuMuc = "F:\SaoLuu_BaseVina",
+  [ValidateSet("", "TaiChinh", "NhanSu")][string]$ChiProject = "",
+  [switch]$TrucTiep   # kết nối thẳng db.<ref>.supabase.co (cần mạng IPv6) thay vì Session pooler
 )
 # "Continue": PowerShell 5.1 coi mọi dòng cảnh báo của pg_dump là lỗi nếu để "Stop";
 # lỗi thật được bắt qua $LASTEXITCODE và throw bên dưới.
 $ErrorActionPreference = "Continue"
 
 $PROJECTS = @(
-  @{ Ten = "TaiChinh"; Ref = "eodrpyedatohsovobsxj" },
-  @{ Ten = "NhanSu";   Ref = "naglcxbpxnntiglrzeqx" }
+  @{ Ten = "TaiChinh"; Ref = "eodrpyedatohsovobsxj"; BienMatKhau = "SUPABASE_DB_PASSWORD_TAICHINH" },
+  @{ Ten = "NhanSu";   Ref = "naglcxbpxnntiglrzeqx"; BienMatKhau = "SUPABASE_DB_PASSWORD" }
 )
+if ($ChiProject) { $PROJECTS = @($PROJECTS | Where-Object { $_.Ten -eq $ChiProject }) }
 
 # 1) Kiểm tra pg_dump
 $pgDump = Get-Command pg_dump -ErrorAction SilentlyContinue
 if (-not $pgDump) {
-  $thu = Get-ChildItem "C:\Program Files\PostgreSQL\*\bin\pg_dump.exe" -ErrorAction SilentlyContinue | Sort-Object FullName -Descending | Select-Object -First 1
+  $thu = Get-ChildItem "F:\pgsql\bin\pg_dump.exe", "C:\Program Files\PostgreSQL\*\bin\pg_dump.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
   if ($thu) { $pgDump = $thu.FullName } else { throw "Không tìm thấy pg_dump. Cài PostgreSQL 17 (xem docs/SAO_LUU.md mục 1) rồi chạy lại." }
 } else { $pgDump = $pgDump.Source }
 $binDir = Split-Path $pgDump
@@ -60,13 +65,19 @@ foreach ($p in $PROJECTS) {
     try {
       $pool = Invoke-RestMethod -Uri "https://api.supabase.com/v1/projects/$ref/config/database/pooler" -Headers @{ Authorization = "Bearer $token" } -ErrorAction Stop
       $pool = @($pool)[0]
-      $dbHost = $pool.db_host; if ($pool.db_user) { $dbUser = $pool.db_user }
+      # Session pooler bắt buộc user dạng postgres.<ref>; API có thể trả "postgres" trần → chỉ nhận khi đã có hậu tố
+      $dbHost = $pool.db_host; if ($pool.db_user -like "*.$ref") { $dbUser = $pool.db_user }
     } catch { Write-Warning "Không lấy được địa chỉ pooler tự động: $($_.Exception.Message)" }
   }
+  if ($TrucTiep) { $dbHost = "db.$ref.supabase.co"; $dbUser = "postgres" }   # IPv6, không qua pooler
   if (-not $dbHost) { $dbHost = Read-Host "Nhập Host của Session pooler (Supabase → Connect → Session pooler), ví dụ aws-0-ap-southeast-1.pooler.supabase.com" }
 
-  $sec = Read-Host "Nhập MẬT KHẨU DATABASE của project $($p.Ten) ($ref)" -AsSecureString
-  $env:PGPASSWORD = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($sec))
+  $mk = [Environment]::GetEnvironmentVariable($p.BienMatKhau, "User")
+  if (-not $mk) {
+    $sec = Read-Host "Nhập MẬT KHẨU DATABASE của project $($p.Ten) ($ref)" -AsSecureString
+    $mk = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($sec))
+  }
+  $env:PGPASSWORD = $mk; $mk = $null
   $env:PGSSLMODE = "require"
   $conn = @("--host=$dbHost", "--port=5432", "--username=$dbUser", "--dbname=postgres")
 

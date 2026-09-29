@@ -19,6 +19,9 @@ DB của Supabase là Postgres 17 → pg_dump phải là bản **17 trở lên**
 3. Mở PowerShell mới, kiểm tra: `& "C:\Program Files\PostgreSQL\17\bin\pg_dump.exe" --version` → phải ra `17.x`.
    (Script tự tìm trong `C:\Program Files\PostgreSQL\*\bin`, không cần sửa PATH.)
 
+**Máy hiện tại (29/09/2026):** đã có sẵn bản giải nén PostgreSQL 17.6 ở `F:\pgsql\bin` (không cài vào Windows) —
+script tự tìm ở đó trước, bỏ qua bước cài.
+
 ## 2. Chuẩn bị mật khẩu database
 
 Cần **mật khẩu database** (không phải mật khẩu đăng nhập app) của 2 project:
@@ -37,7 +40,11 @@ Mở PowerShell tại thư mục `Combine 3 in 1`:
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\sao-luu\sao-luu-db.ps1 -ThuMuc "F:\SaoLuu_BaseVina"
 ```
-- Script hỏi mật khẩu DB từng project (gõ không hiện chữ — bình thường).
+- Mật khẩu DB lấy từ biến môi trường User `SUPABASE_DB_PASSWORD_TAICHINH` / `SUPABASE_DB_PASSWORD` (Nhân sự);
+  thiếu biến nào thì script hỏi (gõ không hiện chữ — bình thường).
+- Chỉ 1 project: thêm `-ChiProject TaiChinh` hoặc `-ChiProject NhanSu`.
+- Báo "password authentication failed" dù mật khẩu đúng → thêm `-TrucTiep` (kết nối thẳng `db.<ref>.supabase.co`
+  qua IPv6, không qua Session pooler). **Không thử lại liên tục**: sai nhiều lần Supabase tạm chặn IP.
 - Kết quả: thư mục `F:\SaoLuu_BaseVina\db_<ngày giờ>\` gồm 3 file/project + `KIEM_TRA.txt`.
 - Đạt khi `KIEM_TRA.txt` ghi **"có dữ liệu auth.users: True"** cho cả 2 project.
 

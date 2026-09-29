@@ -13,7 +13,12 @@ ngắn, nói rõ hệ quả nghiệp vụ, không dùng thuật ngữ khi không
 
 ## 2. Quyết định đã chốt (không tự ý thay đổi)
 1. Một app Next.js duy nhất, route theo phân hệ: /tai-chinh, /nhan-su, /kho, /he-thong.
-2. Supabase project chung = project Nhân sự `naglcxbpxnntiglrzeqx`. Gói: «CHƯA CHỐT: Free / Pro».
+2. Supabase project chung = project Nhân sự `naglcxbpxnntiglrzeqx`. Gói: Free.
+   Project THỬ: `rgcimlgfuwjxjapefzyj` (`base-vina-3in1-thu`, Singapore) ở TÀI KHOẢN Supabase RIÊNG.
+   Kết nối: biến môi trường User `SUPABASE_ACCESS_TOKEN_THU`, `SUPABASE_DB_PASSWORD_THU` (token này chỉ thấy project thử).
+   Script ghi dữ liệu phải TỰ TỪ CHỐI chạy nếu mã project khác `rgcimlgfuwjxjapefzyj`.
+   Bản thử chứa dữ liệu thật (chủ dự án chọn 28/09): TẮT Telegram + lịch chạy tự động; mọi tài khoản đặt
+   một mật khẩu thử chung (không ghi mật khẩu đó vào repo).
 3. Kho giữ Google Sheet ở giai đoạn 1–6; chỉ thay đăng nhập Auth.js → Supabase.
 4. Giữ shadcn/base-ui CHỈ trong phân hệ Kho (ngoại lệ duy nhất với quy tắc không thêm thư viện).
 5. Không đăng nhập Google. Đăng nhập email hoặc SĐT (`<số>@sodienthoai.local`).
