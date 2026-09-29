@@ -109,3 +109,18 @@ Việc tồn, làm song song, KHÔNG chặn GĐ1–2:
 - [ ] Sao lưu Google Sheet Kho (làm tay, docs/SAO_LUU.md mục 6).
 - [ ] Chép `F:\SaoLuu_BaseVina` sang nơi thứ hai.
 Quyết định cho GĐ1: bản preview nối vào project THỬ (không nối DB Nhân sự thật, không sửa Redirect URLs project thật).
+
+## 29/09/2026 — Giai đoạn 1: khung app (đang làm)
+- Next.js 16.3.6 + React 19.2.8 + Tailwind v4 + TS strict; alias `@/*`, `@tc/*`, `@ns/*`, `@kho/*`. Thư viện: chỉ
+  những gì 2 app cũ đang dùng (supabase-js, @supabase/ssr, vitest) — không thêm thư viện mới.
+- `src/shared/`: supabase (env/client/server/proxy — chép Tài chính), `auth/id-dang-nhap` (chép Tài chính, KHÔNG đổi
+  quy đổi SĐT), `auth/phien` (getUser), `an-toan-duong-dan` (chép safe-path Nhân sự, chặt hơn bản Tài chính),
+  `phan-he` (danh sách 4 phân hệ; `layPhanHeDuocPhep` GĐ1 trả đủ 4 — phân quyền thật ở GĐ5), `ui/*` (chép Tài chính).
+- `ui/hien-thi.tsx`: chỉ chép phần không dính tiền (The, Pill, Bang, ThongBao, TrangThaiTrong, KhungChoTai).
+  Tien/OSoLieu/ThanhTienDo/PillTrangThai dùng lib tiền của Tài chính → chép cùng GĐ3.
+- `globals.css` = bản Tài chính + khối "MỞ RỘNG 3 TRONG 1" (bộ chọn phân hệ, dải màu nhấn) ghi HEX theo từng phân hệ.
+- Trang: /dang-nhap (chép Tài chính), /doi-mat-khau (xử lý của Nhân sự: bắt nhập lại mật khẩu cũ; giao diện Tài chính;
+  đặt ở src/app/doi-mat-khau theo cấu trúc bắt buộc — có nút "Về trang chủ", không nằm trong khung),
+  khung (ung-dung) + trang chủ rỗng + /them (điện thoại) + 4 trang giữ chỗ phân hệ.
+- Kiểm tra: tsc sạch · eslint 0 lỗi · vitest 15/15 · next build OK · chạy thử máy (project thử) 13/13 luồng.
+- Chạy thử trên máy dùng `.env.local` trỏ project THỬ (git bỏ qua).
