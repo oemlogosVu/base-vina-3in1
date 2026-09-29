@@ -124,3 +124,33 @@ Quyết định cho GĐ1: bản preview nối vào project THỬ (không nối D
   khung (ung-dung) + trang chủ rỗng + /them (điện thoại) + 4 trang giữ chỗ phân hệ.
 - Kiểm tra: tsc sạch · eslint 0 lỗi · vitest 15/15 · next build OK · chạy thử máy (project thử) 13/13 luồng.
 - Chạy thử trên máy dùng `.env.local` trỏ project THỬ (git bỏ qua).
+- Vercel (chủ dự án duyệt): thêm `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` (project THỬ, loại config,
+  CHỈ Preview). Commit `e3d897c` trên nhánh `giai-doan-1`.
+- Sự cố: lần dựng tự động đầu tiên từ nhánh `giai-doan-1` bị Vercel gắn target **production** (project chưa từng có bản
+  production; cấu hình productionBranch vẫn là `main`) → dựng LỖI vì thiếu biến (biến chỉ có ở Preview) → không có gì
+  lên production (tên miền production trả 404). Đã dựng lại đích danh Preview qua API `/v13/deployments` (gitSource
+  nhánh giai-doan-1, không đặt target) → Ready. Lưu ý các lần sau: kiểm target trước khi báo link.
+- Preview: https://base-vina-3in1-git-giai-doan-1-trieu-vu.vercel.app (Vercel Authentication — phải đăng nhập Vercel).
+- Còn lệch cấu hình project so với AGENTS.md mục 5: Framework Preset "Other" (vercel.json đã ghi nextjs), Function
+  Region project = iad1 (vercel.json đã ghi sin1). Sửa trong Settings khi chủ dự án duyệt.
+
+## ⏸ ĐIỂM DỪNG — 29/09/2026 (chủ dự án yêu cầu tạm dừng)
+Đang ở: **Giai đoạn 1 — đã dựng xong, CHỜ chủ dự án bấm thử preview**. Chưa duyệt sang GĐ2.
+Nhánh làm việc: `giai-doan-1` (chưa gộp vào `main`). Preview: base-vina-3in1-git-giai-doan-1-trieu-vu.vercel.app
+(đăng nhập Vercel mới mở được; đăng nhập app bằng tài khoản Nhân sự + MAT_KHAU_THU).
+
+Việc chờ chủ dự án quyết khi quay lại:
+1. Kết quả bấm thử preview (luồng a–f trong báo cáo GĐ1) → duyệt/không duyệt sang GĐ2.
+2. Duyệt sửa cấu hình project Vercel: Framework → Next.js, Function Region → sin1.
+3. Cho Chủ tịch/KTT thử: tắt Vercel Authentication cho preview HAY tạo link chia sẻ tạm.
+4. Việc tồn GĐ0: sao lưu DB Tài chính (trước GĐ3), Google Sheet Kho, bản sao lưu thứ hai.
+5. File `Key.txt` ở thư mục gốc (chưa mở, KHÔNG commit) — chủ dự án tự xử lý.
+
+Trạng thái trên máy (không nằm trong git):
+- `F:\pgsql` (PostgreSQL 17.6), `F:\SaoLuu_BaseVina` (sao lưu DB Nhân sự 29/09 09:58 + file Storage + ảnh Kho).
+- `.env.local` trỏ project THỬ. Biến User: SUPABASE_ACCESS_TOKEN_THU, SUPABASE_DB_PASSWORD_THU, MAT_KHAU_THU,
+  SUPABASE_DB_PASSWORD (Nhân sự, đã đặt lại 29/09). Thiếu SUPABASE_DB_PASSWORD_TAICHINH.
+- Project thử `rgcimlgfuwjxjapefzyj`: dữ liệu Nhân sự lúc 09:58 29/09; Free tự tạm dừng sau 7 ngày không dùng
+  (vào Dashboard bấm Restore).
+
+Bắt đầu phiên sau: `git checkout giai-doan-1`, `npx vercel whoami`, đọc AGENTS.md + mục này.
