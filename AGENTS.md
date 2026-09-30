@@ -19,7 +19,11 @@ ngắn, nói rõ hệ quả nghiệp vụ, không dùng thuật ngữ khi không
    Script ghi dữ liệu phải TỰ TỪ CHỐI chạy nếu mã project khác `rgcimlgfuwjxjapefzyj`.
    Bản thử chứa dữ liệu thật (chủ dự án chọn 28/09): TẮT Telegram + lịch chạy tự động; mọi tài khoản đặt
    một mật khẩu thử chung (không ghi mật khẩu đó vào repo).
-3. Kho giữ Google Sheet ở giai đoạn 1–6; chỉ thay đăng nhập Auth.js → Supabase.
+3. (ĐỔI 30/09) Kho chuyển vào database, schema `kho` — bỏ Google Sheet. Đăng nhập Supabase.
+   Database CHUẨN HOÁ danh mục chung trước khi dựng app: xem docs/KE_HOACH_DU_LIEU_DUNG_CHUNG.md
+   (bảng chung cong_ty/nguoi/nguoi_nhay_cam/phong_ban/cong_trinh/doi_tac/quyen_phan_he + VIEW tương thích
+   giữ tên bảng cũ để KHÔNG viết lại logic tiền/lương). Tên mới: tiếng Việt không dấu.
+   Telegram: giữ mã, KHÔNG kích hoạt (không secret, không pg_cron, khóa bot trong cau_hinh_he_thong để trống).
 4. Giữ shadcn/base-ui CHỈ trong phân hệ Kho (ngoại lệ duy nhất với quy tắc không thêm thư viện).
 5. Không đăng nhập Google. Đăng nhập email hoặc SĐT (`<số>@sodienthoai.local`).
 6. Tên hiển thị: «CHƯA CHỐT». Domain: «CHƯA CHỐT».

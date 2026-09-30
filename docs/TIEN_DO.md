@@ -154,3 +154,13 @@ Trạng thái trên máy (không nằm trong git):
   (vào Dashboard bấm Restore).
 
 Bắt đầu phiên sau: `git checkout giai-doan-1`, `npx vercel whoami`, đọc AGENTS.md + mục này.
+
+## 30/09/2026 — Chuẩn hoá database (chủ dự án duyệt, làm TRƯỚC GĐ2)
+- GĐ1 đã nghiệm thu. Trước GĐ2: chuẩn hoá DB phủ cả 3 dự án, dựng trên project THỬ — thiết kế
+  `docs/KE_HOACH_DU_LIEU_DUNG_CHUNG.md` (đã duyệt). Kho vào DB (schema `kho`), đổi AGENTS.md §2.3.
+- Rà soát (chỉ đọc) DB thật: TC 31 bảng/66 hàm/66 policy; NS 37 bảng/88 hàm/147 policy. Hàm dùng danh mục: TC 16, NS 43;
+  hàm GHI danh mục: TC 1, NS 6 → dùng VIEW tương thích, không viết lại logic tiền/lương.
+- Phát hiện: khóa bot Telegram TC nằm TRONG bảng `cau_hinh_he_thong` → bản thử để trống cột này.
+- Bản nháp migration 33 (đổi chung_tu → chung_tu_fmb, 29/08) đã cũ → sinh lại từ DB Tài chính hiện tại.
+- Quyết định 30/09: STK trùng lấy TC; NCC001/NCC002 (TC) ngừng dùng; "XD Anh Nam" = nhà thầu phụ.
+- Chờ: mật khẩu DB Tài chính.
