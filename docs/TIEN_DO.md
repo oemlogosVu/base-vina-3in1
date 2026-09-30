@@ -180,3 +180,10 @@ Bắt đầu phiên sau: `git checkout giai-doan-1`, `npx vercel whoami`, đọc
   hàm 154/154 khớp; anon 0 bảng. (Lần sinh đầu sai cú pháp "grant INSERT, UPDATE (cột)" = INSERT cả bảng → đã sửa.)
   Bài học cho "làm thật": mọi bảng Tài chính tạo trong project Nhân sự cũng phải chạy migration quyền này.
 - Đánh số lại: 000001 tài chính gốc · 000002 quyền · 000004 danh mục chung (đang viết) · 000005 kho.
+- 30/09: chủ dự án xác nhận file đối chiếu (sửa 11:11): 2 công ty, 7 người TC↔NS (+ NV0011 TC↔Kho), 5 NCC, 5 dự án
+  (kho/công trường/tổ đội) — ĐÚNG. 4 tài khoản thử Kho (@basevina.test): BỎ. KHO01: kho tổng, không công trình.
+  BP01–04: giữ riêng ở Kho. NV0015 Phạm Văn Nghị, NV0020 Nguyễn Bá Hùng: "có hồ sơ NS dưới tên/mã khác" — CHỜ mã NS
+  (không tìm thấy hồ sơ tên gần giống) → tạm chuyển như người chỉ ở TC.
+- Migration `20260930000004_danh_muc_chung.sql` (bảng chung + view tương thích; ghép theo MÃ, không dữ liệu cá nhân).
+  Chạy thử trên HRM data (giao dịch rồi huỷ): số liệu trước = sau (89/11/2/34/0); quản trị NS nhìn qua view thấy
+  đúng như trước; thêm/sửa nhân viên qua view `employees` chạy; anon bị từ chối bảng `nguoi`. Bản thử không đổi.

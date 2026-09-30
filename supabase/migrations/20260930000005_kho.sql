@@ -58,6 +58,7 @@ create table kho.bo_phan (
   email_quan_ly  text,
   phong_ban_id   uuid references public.phong_ban (id),
   to_doi_id      uuid references public.to_doi (id),
+  cong_trinh_id  uuid references public.cong_trinh (id),  -- tổ đội nhận hàng tại công trình (BP05, BP06)
   trang_thai     text not null default 'HOAT_DONG' check (trang_thai in ('HOAT_DONG', 'NGUNG')),
   created_at     timestamptz not null default now(),
   updated_at     timestamptz not null default now()
