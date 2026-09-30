@@ -1,0 +1,35 @@
+-- =========================================================
+-- P0d (tiếp) — Gỡ chốt chặn leo thang qua chức danh
+--
+-- MỘT LỖI TÔI VỪA GÂY RA, GHI LẠI NGUYÊN VĂN
+--
+-- Migration P0d xoá cột `positions.quyen`. Trigger
+-- `trg_chuc_danh_chan_tu_cap_quyen` trên `nhan_vien_chuc_danh` vẫn đọc cột ấy,
+-- nên từ lúc migration chạy tới lúc bản này chạy, **mọi lần gán chức danh cho
+-- một nhân viên đều lỗi**.
+--
+-- Xoá một cột thì `drop column` báo ngay nếu có view hay ràng buộc phụ thuộc —
+-- nhưng KHÔNG báo gì về thân hàm plpgsql, vì Postgres không theo dõi phụ thuộc
+-- bên trong thân hàm. Nó chỉ vỡ lúc chạy.
+--
+-- Cách phát hiện đã dùng, và nên dùng lại mỗi lần xoá cột:
+--
+--     select proname from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+--     where n.nspname = 'public' and pg_get_functiondef(p.oid) ~ '\mten_cot\M';
+--
+-- VÌ SAO XOÁ HẲN CHỐT NÀY
+--
+-- Nó chặn đúng một đường leo thang: người làm nhân sự tự gán cho mình một
+-- chức danh có kèm quyền. Từ P0d chức danh KHÔNG kèm quyền nào nữa — đường ấy
+-- không còn tồn tại, và một cái chốt canh một cửa đã bịt là một cái chốt người
+-- sau sẽ hiểu nhầm là còn cửa.
+--
+-- Đường leo thang nay nằm chỗ khác, và đã có người canh:
+--   • `app_users_update_admin` — chỉ admin đổi được dòng của người khác.
+--   • `app_users_update_self_name` — ghim `tabs` và `duyet_cong`, nên không ai
+--     tự cấp cho mình. Phép kiểm cấu trúc p0 số 31 canh đúng chỗ này.
+--   • `quyen` là cột SINH, không ai ghi thẳng được (p0 số 28, 29).
+-- =========================================================
+
+drop trigger if exists trg_chuc_danh_chan_tu_cap_quyen on public.nhan_vien_chuc_danh;
+drop function if exists public.chan_tu_cap_quyen_qua_chuc_danh();
