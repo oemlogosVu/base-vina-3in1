@@ -1,0 +1,591 @@
+/*
+ * CSS phân hệ Nhân sự — SINH TỰ ĐỘNG bởi scripts/port/chep-nhan-su.mjs từ HRM main:src/app/globals.css.
+ * KHÔNG sửa tay (chạy lại script sẽ ghi đè) — chỉnh ở phần "ĐÈ CỦA APP 3 TRONG 1" cuối file qua script.
+ *  - Mọi quy tắc nằm trong vỏ .ns-scope (layout /nhan-su) — HRM trùng tên class với phần dùng chung
+ *    (.the, .bang, .pill*, .noi-dung) nên không được để ở phạm vi toàn cục.
+ *  - oklch() đổi sang hex: Chrome Android < 111 không hiểu oklch.
+ *  - Bỏ font riêng của HRM: dùng Be Vietnam Pro của app chung. Chế độ tối: tắt ở globals.css chung.
+ */
+
+.ns-scope {
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f6f8fa;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #d8dfe8;
+  --color-slate-400: #8793a5;
+  --color-slate-500: #64748b;
+  --color-slate-600: #47566c;
+  --color-slate-700: #2e3b51;
+  --color-slate-800: #1e293e;
+  --color-slate-900: #0e172b;
+}
+
+.ns-scope {
+  color-scheme: light;
+
+  --mau-chu: #0e172b; 
+  --mau-phu: #64748b; 
+  --mau-vien: #e2e8f0; 
+  --mau-vien-nhat: #eff2f6; 
+  --mau-nen: #f8fafc; 
+  --mau-the: #fff; 
+  --mau-dau-bang: #f6f8fa; 
+
+  --mau-nhan: #3a63cd; 
+  --mau-nhan-dam: #284eb5; 
+  --mau-nhan-nen: #e5efff; 
+
+  --rong-sidebar: 240px;
+  --cao-header: 60px;
+}
+
+@media (max-width: 900px) {
+.ns-scope {
+    --cao-header: 50px;
+  }
+}
+
+.ns-scope,
+.ns-scope {
+  min-height: 100%;
+}
+
+.ns-scope {
+  background-color: var(--mau-nen);
+  color: var(--mau-chu);
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  
+  -webkit-text-size-adjust: 100%;
+}
+
+.ns-scope .khung {
+  min-height: 100dvh;
+}
+
+.ns-scope .sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 40;
+  width: var(--rong-sidebar);
+  overflow-y: auto;
+  background: #fff;
+  border-right: 1px solid var(--mau-vien);
+  padding: 14px 12px 24px;
+}
+
+.ns-scope .sidebar-ten {
+  display: block;
+  padding: 4px 10px 14px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--mau-chu);
+}
+
+.ns-scope .nhom-tieu-de {
+  padding: 14px 10px 5px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6b7280;
+}
+
+.ns-scope .muc-menu {
+  display: block;
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #3d4657;
+  text-decoration: none;
+}
+
+.ns-scope .muc-menu:hover {
+  background: var(--mau-dau-bang);
+}
+
+.ns-scope .muc-menu[aria-current='page'] {
+  color: var(--mau-nhan);
+  background: var(--mau-nhan-nen);
+  font-weight: 600;
+}
+
+.ns-scope .nhom-gop > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  list-style: none;
+}
+
+.ns-scope .nhom-gop > summary::-webkit-details-marker {
+  display: none;
+}
+
+.ns-scope .chevron {
+  transition: transform 0.15s ease;
+  color: #9aa3b2;
+}
+
+.ns-scope .nhom-gop[open] .chevron {
+  transform: rotate(90deg);
+}
+
+.ns-scope .header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: var(--cao-header);
+  padding: 0 20px;
+  background: #fff;
+  border-bottom: 1px solid var(--mau-vien);
+}
+
+.ns-scope .header-tieu-de {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--mau-chu);
+}
+
+.ns-scope .nut-hamburger {
+  display: none;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--mau-vien);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--mau-chu);
+}
+
+.ns-scope .than {
+  margin-left: var(--rong-sidebar);
+}
+
+.ns-scope .noi-dung {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.ns-scope .lop-phu {
+  position: fixed;
+  inset: 0;
+  z-index: 35;
+  background: rgba(15, 23, 42, 0.4);
+}
+
+.ns-scope .the {
+  background: var(--mau-the);
+  border: 1px solid var(--mau-vien);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.ns-scope .the-tieu-de {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--mau-chu);
+}
+
+.ns-scope .the-ghi-chu {
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: var(--mau-phu);
+}
+
+.ns-scope .so-lieu {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--mau-chu);
+}
+
+@media (min-width: 901px) {
+.ns-scope .so-lieu {
+    font-size: 26px;
+  }
+}
+
+.ns-scope .nhan-phu {
+  font-size: 12.5px;
+  color: var(--mau-phu);
+}
+
+.ns-scope .pill {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ns-scope .pill-xanh {
+  background: #d2f6dd;
+  color: #095c34;
+}
+
+.ns-scope .pill-vang {
+  background: #fff0c5;
+  color: #724e00;
+}
+
+.ns-scope .pill-xam {
+  background: #eceff2;
+  color: #5c646f;
+}
+
+.ns-scope .pill-do {
+  background: #ffe2e1;
+  color: #9a3936;
+}
+
+.ns-scope .cham {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  flex: none;
+  margin-top: 5px;
+}
+
+.ns-scope .cham-do {
+  background: #cf4040;
+}
+
+.ns-scope .cham-vang {
+  background: #d59800;
+}
+
+.ns-scope .cham-xanh {
+  background: #2c965d;
+}
+
+.ns-scope .bang {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.ns-scope .bang thead th {
+  background: var(--mau-dau-bang);
+  padding: 9px 12px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--mau-phu);
+  white-space: nowrap;
+}
+
+.ns-scope .bang tbody td,
+.ns-scope .bang tfoot td {
+  padding: 11px 12px;
+  border-top: 1px solid var(--mau-vien-nhat);
+  vertical-align: top;
+}
+
+.ns-scope .bang tfoot td {
+  border-top: 2px solid var(--mau-vien);
+  font-weight: 600;
+}
+
+.ns-scope .bang .phai {
+  text-align: right;
+}
+
+@media (max-width: 900px) {
+.ns-scope .bang thead {
+    display: none;
+  }
+
+.ns-scope .bang,
+.ns-scope .bang tbody,
+.ns-scope .bang tfoot,
+.ns-scope .bang tr,
+.ns-scope .bang td {
+    display: block;
+    width: auto;
+  }
+
+.ns-scope .bang tbody tr,
+.ns-scope .bang tfoot tr {
+    background: var(--mau-the);
+    border: 1px solid var(--mau-vien);
+    border-radius: 12px;
+    padding: 13px;
+    margin-bottom: 10px;
+  }
+
+.ns-scope .bang tbody td,
+.ns-scope .bang tfoot td {
+    border: 0;
+    padding: 2px 0;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+.ns-scope .bang .phai {
+    text-align: right;
+  }
+
+.ns-scope .bang tbody td[data-nhan]::before,
+.ns-scope .bang tfoot td[data-nhan]::before {
+    content: attr(data-nhan);
+    flex: none;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--mau-phu);
+  }
+
+.ns-scope .bang tbody td:first-child {
+    font-weight: 600;
+    font-size: 14px;
+    padding-bottom: 6px;
+  }
+}
+
+.ns-scope .khung-cuon {
+  overflow-x: auto;
+  
+  scroll-snap-type: x proximity;
+}
+
+.ns-scope .ma-tran {
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+.ns-scope .ma-tran th,
+.ns-scope .ma-tran td {
+  border-bottom: 1px solid var(--mau-vien-nhat);
+  padding: 6px 4px;
+  text-align: center;
+}
+
+.ns-scope .ma-tran thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--mau-dau-bang);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--mau-phu);
+}
+
+.ns-scope .ma-tran .cot-ten {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  background: var(--mau-the);
+  text-align: left;
+  min-width: 168px;
+  max-width: 168px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-right: 1px solid var(--mau-vien);
+  scroll-snap-align: start;
+}
+
+.ns-scope .ma-tran thead .cot-ten {
+  z-index: 4;
+  background: var(--mau-dau-bang);
+}
+
+.ns-scope .ma-tran .o-ngay {
+  min-width: 34px;
+  scroll-snap-align: start;
+}
+
+.ns-scope .o-du {
+  background: #e3f8e9;
+}
+
+.ns-scope .o-thieu {
+  background: #fff2d2;
+  font-weight: 600;
+}
+
+.ns-scope .o-nghi {
+  background: #ffeceb;
+}
+
+.ns-scope .o-cn {
+  background: #f5f7f9;
+  color: var(--mau-phu);
+}
+
+.ns-scope .o-tuong-lai {
+  color: #b9bec4;
+}
+
+.ns-scope .o-khai-ho {
+  position: relative;
+}
+
+.ns-scope .o-khai-ho::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: #c96900;
+}
+
+.ns-scope .ma-tran .cot-tong {
+  border-left: 1px solid var(--mau-vien);
+  font-weight: 700;
+  min-width: 60px;
+}
+
+.ns-scope .ma-tran tfoot td {
+  background: var(--mau-dau-bang);
+  font-weight: 600;
+  border-top: 2px solid var(--mau-vien);
+}
+
+@media (max-width: 900px) {
+.ns-scope .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    box-shadow: 0 0 0 1px var(--mau-vien);
+  }
+
+.ns-scope .sidebar.mo {
+    transform: translateX(0);
+  }
+
+.ns-scope .than {
+    margin-left: 0;
+  }
+
+.ns-scope .noi-dung {
+    padding: 14px 12px 28px;
+  }
+
+.ns-scope .header {
+    padding: 0 12px;
+  }
+
+.ns-scope .nut-hamburger {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 901px) {
+.ns-scope .lop-phu {
+    display: none;
+  }
+}
+
+@media print {
+@page {
+    
+    size: A4 landscape;
+    margin: 12mm;
+  }
+
+.ns-scope .khong-in,
+.ns-scope .sidebar,
+.ns-scope .header,
+.ns-scope .lop-phu {
+    display: none !important;
+  }
+
+.ns-scope .than {
+    margin-left: 0;
+  }
+
+.ns-scope .noi-dung {
+    max-width: none;
+    padding: 0;
+  }
+
+.ns-scope {
+    background: white;
+    color: black;
+  }
+
+.ns-scope .khung-cuon {
+    overflow: visible;
+  }
+
+.ns-scope .ma-tran {
+    font-size: 8.5px;
+  }
+
+.ns-scope .ma-tran th,
+.ns-scope .ma-tran td {
+    padding: 2px 1px;
+  }
+
+.ns-scope .ma-tran .cot-ten {
+    position: static;
+    min-width: 0;
+    max-width: none;
+  }
+
+.ns-scope .ma-tran thead th {
+    position: static;
+  }
+
+.ns-scope .bang,
+.ns-scope .bang thead,
+.ns-scope .bang tbody,
+.ns-scope .bang tfoot,
+.ns-scope .bang tr,
+.ns-scope .bang td,
+.ns-scope .bang th {
+    display: revert;
+  }
+
+.ns-scope .bang tbody td::before,
+.ns-scope .bang tfoot td::before {
+    content: none;
+  }
+
+.ns-scope thead {
+    display: table-header-group;
+  }
+
+.ns-scope tfoot {
+    display: table-footer-group;
+  }
+
+.ns-scope tr,
+.ns-scope .khong-tach-trang {
+    break-inside: avoid;
+  }
+
+.ns-scope table,
+.ns-scope th,
+.ns-scope td {
+    border-color: #999 !important;
+  }
+}
+
+/* ĐÈ CỦA APP 3 TRONG 1 (design/he-thong-giao-dien): nút chính, link, mục đang chọn dùng NAVY như cả app —
+   màu nhấn phân hệ (tím) chỉ để nhận diện, đã có ở khung chung. Thanh xám đậm nhất (nút đen của HRM) → navy. */
+.ns-scope {
+  --mau-nhan: #1f3a5c;
+  --mau-nhan-dam: #16293f;
+  --mau-nhan-nen: #e9ebef;
+  --color-slate-900: #1f3a5c;
+  max-width: 1040px;
+}
+.ns-scope .header-tieu-de { margin-bottom: 4px; }
+.ns-scope .than-trang-ns { margin-top: 16px; display: flex; flex-direction: column; gap: 20px; }

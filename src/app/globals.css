@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Chế độ tối TẮT cho cả app: biến thể dark: chỉ sống khi có class .dark (không bao giờ gắn).
+   Mã Nhân sự chép sang còn ~338 chỗ dark:* — không có dòng này chúng tự bật trên máy đặt giao diện tối. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /*
  * HỆ THỐNG THIẾT KẾ — bảng màu theo bản chủ dự án đã duyệt (18/07/2026),
  * bộ thành phần theo bản thiết kế lại đợt 1 (15/09/2026):

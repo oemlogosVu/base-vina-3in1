@@ -35,12 +35,15 @@ function mucDangMo(duongDan: string, ds: { duongDan: string }[]): string | null 
   return tot;
 }
 
+export type NhomDieuHuong = { ten: string; muc: MucDieuHuong[] };
+
 /**
- * Menu bên trong từng phân hệ. GĐ1 mỗi phân hệ chỉ có trang giữ chỗ; menu thật chép
- * sang cùng phân hệ (GĐ2 Nhân sự, GĐ3 Tài chính, GĐ4 Kho, GĐ5 Hệ thống).
+ * Menu bên trong phân hệ: nhóm do máy chủ dựng từ nguồn menu của chính phân hệ (menu-phan-he.ts);
+ * phân hệ chưa ghép (chưa có menu) → một mục "Tổng quan". Luôn có "Tổng quan" (trang đầu phân hệ) ở đầu.
  */
-function menuPhanHe(ph: ThongTinPhanHe): MucDieuHuong[] {
-  return [{ duongDan: ph.duongDan, nhan: "Tổng quan", bieuTuong: "home" }];
+function menuPhanHe(ph: ThongTinPhanHe, nhom: NhomDieuHuong[] | undefined): NhomDieuHuong[] {
+  const tongQuan: NhomDieuHuong = { ten: ph.ten, muc: [{ duongDan: ph.duongDan, nhan: "Tổng quan", bieuTuong: "home" }] };
+  return nhom && nhom.length ? [tongQuan, ...nhom] : [tongQuan];
 }
 
 const TIEU_DE_KHAC: { duongDan: string; nhan: string }[] = [
@@ -127,11 +130,19 @@ export function ThanhTabDuoi({ phanHe }: { phanHe: ThongTinPhanHe[] }) {
   );
 }
 
-export function ThanhBen({ phanHe, phienBan }: { phanHe: ThongTinPhanHe[]; phienBan: string }) {
+export function ThanhBen({
+  phanHe,
+  phienBan,
+  menuTheoPhanHe,
+}: {
+  phanHe: ThongTinPhanHe[];
+  phienBan: string;
+  menuTheoPhanHe: Partial<Record<ThongTinPhanHe["ma"], NhomDieuHuong[]>>;
+}) {
   const duongDan = usePathname();
   const ph = phanHeTuDuongDan(duongDan);
-  const menu = ph ? menuPhanHe(ph) : [];
-  const dangMo = mucDangMo(duongDan, [{ duongDan: "/" }, ...menu, { duongDan: "/doi-mat-khau" }]);
+  const menu = ph ? menuPhanHe(ph, menuTheoPhanHe[ph.ma]) : [];
+  const dangMo = mucDangMo(duongDan, [{ duongDan: "/" }, ...menu.flatMap((n) => n.muc), { duongDan: "/doi-mat-khau" }]);
 
   return (
     <nav aria-label="Điều hướng chính" className="thanh-ben hidden lg:flex">
@@ -180,11 +191,11 @@ export function ThanhBen({ phanHe, phienBan }: { phanHe: ThongTinPhanHe[]; phien
         </details>
       )}
 
-      {ph && (
-        <div className="nhom-ben">
-          <p className="nhan-nhom-ben">{ph.ten}</p>
+      {menu.map((n) => (
+        <div key={n.ten} className="nhom-ben">
+          <p className="nhan-nhom-ben">{n.ten}</p>
           <ul>
-            {menu.map((m) => (
+            {n.muc.map((m) => (
               <li key={m.duongDan}>
                 <Link
                   href={m.duongDan}
@@ -198,7 +209,7 @@ export function ThanhBen({ phanHe, phienBan }: { phanHe: ThongTinPhanHe[]; phien
             ))}
           </ul>
         </div>
-      )}
+      ))}
 
       <div className="nhom-ben">
         <p className="nhan-nhom-ben">Tài khoản</p>

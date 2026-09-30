@@ -1,9 +1,10 @@
 import { dangXuat } from "@/app/dang-nhap/actions";
 import { batBuocPhien } from "@/shared/auth/phien";
-import { layPhanHeDuocPhep } from "@/shared/phan-he";
+import { layPhanHeDuocPhep } from "@/shared/phan-he-duoc-phep";
 import { PHIEN_BAN, TEN_APP } from "@/shared/phien-ban";
 import { BieuTuong } from "@/shared/ui/bieu-tuong";
 
+import { layMenuPhanHe } from "./menu-phan-he";
 import { DaiNhan, DauTrangDienThoai, KhungPhanHe, ThanhBen, ThanhTabDuoi } from "./dieu-huong";
 
 /**
@@ -18,6 +19,7 @@ import { DaiNhan, DauTrangDienThoai, KhungPhanHe, ThanhBen, ThanhTabDuoi } from 
  */
 export default async function KhungUngDung({ children }: { children: React.ReactNode }) {
   const [phien, phanHe] = await Promise.all([batBuocPhien(), layPhanHeDuocPhep()]);
+  const menuTheoPhanHe = await layMenuPhanHe(phanHe.map((p) => p.ma));
 
   return (
     <KhungPhanHe>
@@ -40,7 +42,7 @@ export default async function KhungUngDung({ children }: { children: React.React
       <DaiNhan />
 
       <div className="flex flex-1">
-        <ThanhBen phanHe={phanHe} phienBan={PHIEN_BAN} />
+        <ThanhBen phanHe={phanHe} phienBan={PHIEN_BAN} menuTheoPhanHe={menuTheoPhanHe} />
 
         {/* pb điện thoại: chừa chỗ cho thanh tab dán đáy (6 + 56 + 14px + vùng an
             toàn), nếu không nội dung cuối trang bị nó che mất. */}

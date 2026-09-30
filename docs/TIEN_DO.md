@@ -203,3 +203,17 @@ Bắt đầu phiên sau: `git checkout giai-doan-1`, `npx vercel whoami`, đọc
   mã; chỉ dùng biến có sẵn của Supabase (SUPABASE_URL/ANON/SERVICE_ROLE), không Telegram.
 - Deploy bằng `npx supabase functions deploy <tên> --project-ref rgcimlgfuwjxjapefzyj --use-api`
   (SUPABASE_ACCESS_TOKEN = token THỬ, chỉ trong biến môi trường tiến trình).
+- Chép mã Nhân sự bằng `scripts/port/chep-nhan-su.mjs` (đọc thẳng HRM main 9a0b9a8, chạy lại được): 96 file
+  (26 màn → `(ung-dung)/nhan-su/…`, lib/components/types → `src/modules/nhan-su`, 7 file test). Đổi 172 chỗ đường dẫn
+  (danh sách: `scripts/port/bao-cao-duong-dan-nhan-su.txt`): /nhan-su→/nhan-su/ho-so, /ho-so→/nhan-su/ho-so-cua-toi,
+  /cham-cong|/luong|/quan-tri|/sua-chua-cong|/to-doi → /nhan-su/…, /login→/dang-nhap. Không đổi logic.
+- Sửa khi chép (script tự làm, xem trong script): KhungTrang chỉ còn tiêu đề + nội dung (khung chung vẽ thanh bên,
+  đăng xuất, đổi mật khẩu); đăng xuất dùng hành động chung; CSS HRM → `src/modules/nhan-su/nhan-su.css` bọc trong
+  `.ns-scope` (HRM trùng class .the/.bang/.pill/.noi-dung với phần chung), oklch → hex (Android cũ), nút chính navy.
+  globals.css chung thêm `@custom-variant dark` (tắt ~338 chỗ dark:* như HRM đã làm).
+- Menu Nhân sự trong thanh bên chung: `src/app/(ung-dung)/menu-phan-he.ts` đọc `tabsChoPhep()` của HRM (theo vai trò +
+  tab tick từng người). Bộ chọn phân hệ: Nhân sự chỉ hiện khi có dòng `quyen_phan_he` 'ns' (`src/shared/phan-he-duoc-phep.ts`).
+- Kiểm tra: tsc 0 lỗi · eslint 0 lỗi (1 cảnh báo) · vitest 150/150 (135 test HRM + 15) · next build OK (26 màn NS).
+  Chạy thử máy (project THỬ, 4 tài khoản): 3 quản trị mở đủ 27/27 màn; tài khoản nhân viên: menu đúng tab được phép,
+  8 màn quản lý đều chuyển về /nhan-su/ho-so-cua-toi, không lộ bảng dữ liệu. Nhật ký máy chủ: 0 lỗi.
+- Build lỗi EPERM khi OneDrive khoá `.next` → xoá `.next` rồi build lại.

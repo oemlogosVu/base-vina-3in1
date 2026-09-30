@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { dangXuat } from "@/app/dang-nhap/actions";
-import { layPhanHeDuocPhep } from "@/shared/phan-he";
+import { layPhanHeDuocPhep } from "@/shared/phan-he-duoc-phep";
 import { PHIEN_BAN } from "@/shared/phien-ban";
 import { BieuTuong } from "@/shared/ui/bieu-tuong";
 
