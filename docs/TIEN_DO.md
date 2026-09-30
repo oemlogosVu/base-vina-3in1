@@ -164,3 +164,10 @@ Bắt đầu phiên sau: `git checkout giai-doan-1`, `npx vercel whoami`, đọc
 - Bản nháp migration 33 (đổi chung_tu → chung_tu_fmb, 29/08) đã cũ → sinh lại từ DB Tài chính hiện tại.
 - Quyết định 30/09: STK trùng lấy TC; NCC001/NCC002 (TC) ngừng dùng; "XD Anh Nam" = nhà thầu phụ.
 - Chờ: mật khẩu DB Tài chính.
+- 30/09: sao lưu DB Tài chính `F:\SaoLuu_BaseVina\db_2026-09-30_0859` (1.309 mục, có auth.users). Chủ dự án đã
+  đặt lại mật khẩu DB Tài chính (+ cập nhật secret SUPABASE_DB_URL repo Finance).
+- Migration `20260930000001_tai_chinh_goc.sql`: sinh từ DB Tài chính hiện tại (pg_restore -s, chỉ public+private
+  + 3 policy storage), đổi chung_tu → chung_tu_fmb (65 chỗ) + bucket chung-tu-fmb. Dò trùng tên: chỉ `chung_tu`,
+  `chung_tu_pkey`. DB Tài chính KHÔNG gọi HTTP ra ngoài (Telegram do app/Edge Function gửi).
+  ĐÃ CHẠY trên project THỬ (cấu trúc, chưa dữ liệu): 68 bảng public, 22 view, 37 hàm private, bucket chung-tu-fmb.
+- Migration `20260930000003_kho.sql`: chạy thử trong giao dịch rồi huỷ — đạt (tồn khớp công thức app Kho, chặn xoá/sửa).
