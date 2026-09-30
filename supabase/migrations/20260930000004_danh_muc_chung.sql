@@ -37,12 +37,17 @@ revoke all on schema gop from public, anon, authenticated;
 create table if not exists gop.cong_ty (ma_tc text primary key, ma_ns text not null unique);
 insert into gop.cong_ty values ('BV', 'BaseVN'), ('TH', 'TH') on conflict do nothing;
 
--- Người có ở cả Tài chính và Nhân sự (mã NV TC → mã NV NS). NV0011 chỉ TC+Kho; NV0015, NV0020: chờ mã NS.
+-- Người có ở cả Tài chính và Nhân sự (mã NV TC → mã NV NS). NV0011 chỉ TC+Kho.
 create table if not exists gop.nguoi (ma_nv_tc text primary key, ma_nv_ns text not null unique);
 insert into gop.nguoi values
   ('NV_CT', 'BVT001'), ('NV0013', 'BVT004'), ('HCNS_Q', 'BVT019'), ('NV0010', 'THT002'),
   ('NV0012', 'BVT009'), ('NV006', 'BVT002'), ('QT-VU', 'BVT020')
 on conflict do nothing;
+
+-- Nhân viên Tài chính CHƯA có hồ sơ Nhân sự nhưng chủ dự án quyết đưa vào Nhân sự (30/09): tạo hồ sơ NS tối
+-- thiểu (mã NV tạm = mã TC, không theo dõi chấm công); HCNS bổ sung thông tin sau.
+create table if not exists gop.nguoi_them_ns (ma_nv_tc text primary key);
+insert into gop.nguoi_them_ns values ('NV0015'), ('NV0020') on conflict do nothing;
 
 -- Nhà cung cấp Tài chính ↔ mã kế toán (danh sách Kho).
 create table if not exists gop.doi_tac (ma_tc text primary key, ma_ke_toan text not null unique);
@@ -580,6 +585,15 @@ begin
 end $$;
 create trigger ghi instead of insert or update or delete on public.employees
   for each row execute function public.employees_ghi();
+
+-- Hồ sơ Nhân sự tối thiểu cho nhân viên TC chủ dự án quyết đưa vào NS (gop.nguoi_them_ns).
+-- theo_doi_cham_cong = false: chưa vào bảng công; chưa có hợp đồng nên chưa vào bảng lương.
+insert into public.ho_so_nhan_su (nguoi_id, ma_nv, cong_ty_id, trang_thai, theo_doi_cham_cong)
+select t.nguoi_id, t.ma, t.cong_ty_id, 'chinh_thuc'::public.employee_status, false
+from public.nhan_vien_tc t join gop.nguoi_them_ns g on g.ma_nv_tc = t.ma
+where not exists (select 1 from public.ho_so_nhan_su h where h.nguoi_id = t.nguoi_id);
+insert into gop.nhat_ky (viec, chi_tiet)
+select 'ho_so_nhan_su: tao ho so toi thieu cho NV TC', jsonb_agg(g.ma_nv_tc) from gop.nguoi_them_ns g;
 
 -- =====================================================================
 -- 8. QUYỀN XEM / GHI bảng nguoi: thấy người khi thấy được vai trò của họ ở ít nhất một phân hệ

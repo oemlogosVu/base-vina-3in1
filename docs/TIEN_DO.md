@@ -187,3 +187,10 @@ Bắt đầu phiên sau: `git checkout giai-doan-1`, `npx vercel whoami`, đọc
 - Migration `20260930000004_danh_muc_chung.sql` (bảng chung + view tương thích; ghép theo MÃ, không dữ liệu cá nhân).
   Chạy thử trên HRM data (giao dịch rồi huỷ): số liệu trước = sau (89/11/2/34/0); quản trị NS nhìn qua view thấy
   đúng như trước; thêm/sửa nhân viên qua view `employees` chạy; anon bị từ chối bảng `nguoi`. Bản thử không đổi.
+- 30/09: chủ dự án quyết NV0015, NV0020 → tạo hồ sơ Nhân sự tối thiểu (mã NV tạm = mã TC, không chấm công),
+  HCNS bổ sung sau (gop.nguoi_them_ns trong migration 000004).
+- **Database mới đã DỰNG trên project THỬ** (chủ dự án chốt "database đã dựng xong" 30/09): chạy thật 000004 + 000005.
+  68 bảng public, 29 view (7 view tương thích), 13 bảng kho, nguoi 89 = hồ sơ NS 89, anon 0 quyền. Lịch sử migration
+  bản thử: 71 NS + 4 mới (000001, 000002, 000004, 000005).
+- Dữ liệu trên bản thử: CHỈ Nhân sự (29/09 09:58). Dữ liệu Tài chính + Kho nạp ở GĐ3/GĐ4: dựng lại bản thử từ đầu
+  theo đúng thứ tự (NS → 000001 → 000002 → nạp TC → 000004 → 000005 → nạp Kho) = diễn tập đầy đủ ngày gộp thật.
