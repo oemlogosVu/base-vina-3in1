@@ -23,6 +23,9 @@
 | 30/09 | STK ngân hàng cá nhân: 2 bên khác nhau → **lấy Tài chính** làm chuẩn. |
 | 30/09 | NCC `NCC001` An Phát, `NCC002` Minh Long (TC): **ngừng dùng** (dang_dung = false, không xoá). |
 | 30/09 | "Công ty TNHH XD Anh Nam" là **nhà thầu phụ** → `doi_tac` có cờ `la_nha_thau_phu`. |
+| 30/09 | **Thông tin nhạy cảm giữ 2 bảng riêng** (`nhan_vien_nhay_cam` TC, `employee_sensitive` NS — mỗi bảng giữ quyền xem của phân hệ mình, cùng trỏ về `nguoi`). Lý do: gộp thì quyền 2 phân hệ cộng dồn (người xem STK bên TC đọc được CCCD/BHXH bên NS). Bảng `nguoi_nhay_cam` ở mục 4 BỎ. |
+| 30/09 | **Công ty lưu theo từng phân hệ** (`nhan_vien_tc.cong_ty_id`, `ho_so_nhan_su.cong_ty_id`) — `nguoi` KHÔNG có cong_ty_id. Giữ đúng cách tính số đề nghị và công ty trả lương hiện tại. |
+| 30/09 | Công ty trùng (2): giữ **id `cong_ty` Tài chính** (bảng `cong_ty` là bảng chung), cập nhật company_id bên NS — thay mục 5. |
 
 ---
 

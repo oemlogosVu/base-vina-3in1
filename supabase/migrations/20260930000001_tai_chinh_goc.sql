@@ -12,7 +12,7 @@
 -- KHÔNG có trong file này: dữ liệu (nạp bằng script), lịch pg_cron báo cáo 07:30, secret Telegram
 -- (Telegram giữ mã, KHÔNG kích hoạt — quyết định 30/09).
 -- Danh mục dùng chung (cong_ty, nhan_vien, du_an, nha_cung_cap, khach_hang…) được chuẩn hoá ở
--- migration 20260930000002.
+-- migration 20260930000004.
 -- =====================================================================
 
 --

@@ -5,7 +5,7 @@
 -- Quyết định 30/09/2026 (docs/KE_HOACH_DU_LIEU_DUNG_CHUNG.md §6):
 --   * Kho chuyển vào database, bỏ Google Sheet.
 --   * Danh mục dùng chung KHÔNG lặp lại ở đây: nhà cung cấp → public.doi_tac (ma_ke_toan),
---     công trình → public.cong_trinh, người → public.nguoi. Bảng chung tạo ở migration 000002.
+--     công trình → public.cong_trinh, người → public.nguoi. Bảng chung tạo ở migration 000004.
 --   * Tồn kho KHÔNG lưu (bỏ tab ton_kho_cache) — view kho.v_ton_kho tính lại từ phiếu đã duyệt,
 --     chép đúng công thức lib/ton-kho.ts (kể cả cách làm tròn của Math.round).
 --   * Sổ chỉ ghi thêm: không xoá dòng nào; phiếu/đề xuất chỉ được cập nhật các cột trạng thái

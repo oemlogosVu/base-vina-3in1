@@ -171,3 +171,12 @@ Bắt đầu phiên sau: `git checkout giai-doan-1`, `npx vercel whoami`, đọc
   `chung_tu_pkey`. DB Tài chính KHÔNG gọi HTTP ra ngoài (Telegram do app/Edge Function gửi).
   ĐÃ CHẠY trên project THỬ (cấu trúc, chưa dữ liệu): 68 bảng public, 22 view, 37 hàm private, bucket chung-tu-fmb.
 - Migration `20260930000003_kho.sql`: chạy thử trong giao dịch rồi huỷ — đạt (tồn khớp công thức app Kho, chặn xoá/sửa).
+- 30/09: chủ dự án quyết thêm: thông tin nhạy cảm GIỮ 2 bảng riêng; công ty lưu THEO TỪNG PHÂN HỆ; công ty trùng giữ
+  id `cong_ty` Tài chính (ghi vào KE_HOACH_DU_LIEU_DUNG_CHUNG.md mục 1).
+- **Lỗ hổng phát hiện & đã sửa trên bản thử:** project Supabase mới tự cấp ALL cho anon/authenticated trên mọi bảng;
+  pg_restore không thu hồi → bản thử có anon đủ quyền trên 90 bảng (thật: anon KHÔNG có quyền bảng nào).
+  Sửa bằng migration `20260930000002_quyen_truy_cap.sql` SINH từ ACL thật (scripts/db/sinh-quyen-truy-cap.mjs):
+  thu hồi rồi cấp lại đúng như thật. Kết quả so với DB thật: bảng/view/sequence 91/91, quyền theo cột 42/42,
+  hàm 154/154 khớp; anon 0 bảng. (Lần sinh đầu sai cú pháp "grant INSERT, UPDATE (cột)" = INSERT cả bảng → đã sửa.)
+  Bài học cho "làm thật": mọi bảng Tài chính tạo trong project Nhân sự cũng phải chạy migration quyền này.
+- Đánh số lại: 000001 tài chính gốc · 000002 quyền · 000004 danh mục chung (đang viết) · 000005 kho.
