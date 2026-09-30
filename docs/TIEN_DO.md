@@ -194,3 +194,12 @@ Bắt đầu phiên sau: `git checkout giai-doan-1`, `npx vercel whoami`, đọc
   bản thử: 71 NS + 4 mới (000001, 000002, 000004, 000005).
 - Dữ liệu trên bản thử: CHỈ Nhân sự (29/09 09:58). Dữ liệu Tài chính + Kho nạp ở GĐ3/GĐ4: dựng lại bản thử từ đầu
   theo đúng thứ tự (NS → 000001 → 000002 → nạp TC → 000004 → 000005 → nạp Kho) = diễn tập đầy đủ ngày gộp thật.
+
+## 30/09/2026 — Giai đoạn 2: ghép Nhân sự (đang làm, nhánh `giai-doan-2`)
+- Chủ dự án duyệt: gộp `giai-doan-1` + `chuan-hoa-db` vào `main` (fast-forward, main = a3e93ac; không có bản production
+  nào được dựng — tên miền production vẫn 404). Agent tự sửa cài đặt Vercel: Framework Next.js, region sin1.
+- Chủ dự án duyệt cài 4 Edge Function Nhân sự lên project THỬ: cham-cong, anh-cham-cong-to, chung-tu (kèm 2 font
+  Roboto — đã xác nhận tải lên), quan-tri-tai-khoan — ACTIVE, verify_jwt = true. Chép từ HRM main 9a0b9a8, không đổi
+  mã; chỉ dùng biến có sẵn của Supabase (SUPABASE_URL/ANON/SERVICE_ROLE), không Telegram.
+- Deploy bằng `npx supabase functions deploy <tên> --project-ref rgcimlgfuwjxjapefzyj --use-api`
+  (SUPABASE_ACCESS_TOKEN = token THỬ, chỉ trong biến môi trường tiến trình).

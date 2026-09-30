@@ -1,0 +1,9 @@
+# Cấu hình Supabase CLI của repo 3 trong 1 — chỉ phần cần cho migration/Edge Function.
+# (Chép [functions.chung-tu] từ HRM manager main 9a0b9a8: PDF chứng từ cần 2 file font đi kèm.)
+project_id = "base-vina-3in1"
+
+[functions.chung-tu]
+static_files = [
+  "./functions/chung-tu/Roboto-Regular.ttf",
+  "./functions/chung-tu/Roboto-Bold.ttf",
+]
