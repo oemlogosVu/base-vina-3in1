@@ -217,3 +217,20 @@ Bắt đầu phiên sau: `git checkout giai-doan-1`, `npx vercel whoami`, đọc
   Chạy thử máy (project THỬ, 4 tài khoản): 3 quản trị mở đủ 27/27 màn; tài khoản nhân viên: menu đúng tab được phép,
   8 màn quản lý đều chuyển về /nhan-su/ho-so-cua-toi, không lộ bảng dữ liệu. Nhật ký máy chủ: 0 lỗi.
 - Build lỗi EPERM khi OneDrive khoá `.next` → xoá `.next` rồi build lại.
+- Bộ kiểm thử tay Nhân sự: `docs/KIEM_THU_NHAN_SU.md` (79 ca, 9 nhóm, lấy từ tài liệu gốc HRM P0–P7, đối chiếu lương 08/2026).
+  Trang đánh dấu trên điện thoại (artifact riêng tư, lưu kết quả ở db, collection `ket_qua`, mỗi ca một doc theo mã):
+  https://claude.ai/artifact/9ctnM4V3uARiJN8iz2arkR — dựng lại bằng `scripts/kiem-thu/dung-trang-kiem-thu.mjs`.
+- Chủ dự án quyết 30/09: màn "Danh mục chung" (liên kết công trường↔dự án, kho↔công trình, mã kế toán NCC…) làm ở GĐ5.
+
+## ⏸ ĐIỂM DỪNG — 30/09/2026 (chủ dự án yêu cầu tạm dừng)
+Đang ở: **Giai đoạn 2 — đã chép xong Nhân sự, CHỜ chủ dự án kiểm thử tay** theo trang đánh dấu. Nhánh: `giai-doan-2`.
+Preview: https://base-vina-3in1-git-giai-doan-2-trieu-vu.vercel.app (đăng nhập Vercel; app: email + MAT_KHAU_THU).
+Việc tiếp khi quay lại:
+1. Đọc kết quả kiểm thử: ArtifactData list `ket_qua` của artifact trên → phân loại từng ca Sai: lỗi do chép sang / lỗi gốc HRM.
+2. Việc còn của GĐ2: chép script kiểm RLS của HRM (sửa mật khẩu viết cứng → biến môi trường, chỉ chạy project THỬ);
+   so kết quả 1 kỳ lương thử (app mới vs app cũ, cùng DB thử); cập nhật mức dùng Vercel; báo cáo GĐ2 theo mẫu.
+3. Việc tồn GĐ0: Google Sheet Kho, bản sao lưu thứ hai. (DB Tài chính đã sao lưu 30/09.)
+Trạng thái máy (ngoài git): `F:\pgsql`; `F:\SaoLuu_BaseVina` (DB NS 29/09, DB TC 30/09, file Storage, ảnh Kho);
+`.env.local` → project THỬ; biến User: SUPABASE_ACCESS_TOKEN(_THU), SUPABASE_DB_PASSWORD(_THU/_TAICHINH), MAT_KHAU_THU.
+Project THỬ: database mới đã dựng (000001–000005), dữ liệu CHỈ Nhân sự 29/09; 4 Edge Function NS đã cài.
+Bắt đầu phiên sau: `git checkout giai-doan-2`, `npx vercel whoami`, đọc AGENTS.md + mục này.

@@ -1,0 +1,244 @@
+<title>Kiểm thử Nhân sự</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap">
+<style>
+/* Bố cục: một cột cho điện thoại, đầu trang dính (tiến độ + bộ lọc), thẻ ca thử theo nhóm nghiệp vụ. */
+:root {
+  --nen: #f3f5f7; --giay: #ffffff; --muc: #1b2430; --muc-phu: #42526b; --muc-nhat: #5a6b7c;
+  --vien: #d6dde4; --navy: #1f3a5c; --tim: #6b3589; --tim-nen: #f0ebf3;
+  --xanh: #1f7a45; --xanh-nen: #e2f2e7; --do: #b3372e; --do-nen: #f9e5e3; --xam-nen: #e8ecf0; --tieu-diem: #2e5a8f;
+  --chu: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --so: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --nen: #11161d; --giay: #1a212b; --muc: #e6ebf1; --muc-phu: #b4c0cd; --muc-nhat: #92a0af;
+  --vien: #2c3643; --navy: #8fb2dc; --tim: #c9a2de; --tim-nen: #2a2032;
+  --xanh: #6fcf97; --xanh-nen: #16291f; --do: #f08b82; --do-nen: #321a18; --xam-nen: #242d38; --tieu-diem: #8fb2dc;
+  color-scheme: dark } }
+:root[data-theme="dark"] {
+  --nen: #11161d; --giay: #1a212b; --muc: #e6ebf1; --muc-phu: #b4c0cd; --muc-nhat: #92a0af;
+  --vien: #2c3643; --navy: #8fb2dc; --tim: #c9a2de; --tim-nen: #2a2032;
+  --xanh: #6fcf97; --xanh-nen: #16291f; --do: #f08b82; --do-nen: #321a18; --xam-nen: #242d38; --tieu-diem: #8fb2dc;
+  color-scheme: dark }
+
+* { box-sizing: border-box; }
+body { background: var(--nen); color: var(--muc); font-family: var(--chu); font-size: 15px; line-height: 1.5; padding-inline: 16px; padding-block: 0 40px; }
+.khung { max-width: 720px; margin: 0 auto; }
+h1, h2 { text-wrap: balance; margin: 0; }
+:focus-visible { outline: 3px solid var(--tieu-diem); outline-offset: 2px; border-radius: 4px; }
+
+.dau { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--nen); padding-block: 14px 10px; border-bottom: 1px solid var(--vien); margin-inline: -16px; padding-inline: 16px; }
+.dau-trong { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+.ten { display: flex; align-items: center; gap: 10px; }
+.o-ns { flex: none; width: 34px; height: 34px; border-radius: 9px; background: var(--tim); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 12px; }
+:root[data-theme="dark"] .o-ns { color: #1a212b; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .o-ns { color: #1a212b; } }
+.ten h1 { font-size: 19px; font-weight: 700; }
+.ten p { margin: 0; font-size: 12.5px; color: var(--muc-nhat); }
+.tien-do { display: flex; flex-direction: column; gap: 6px; }
+.thanh { height: 8px; border-radius: 99px; background: var(--xam-nen); overflow: hidden; display: flex; }
+.thanh span { height: 100%; }
+.thanh .d { background: var(--xanh); } .thanh .s { background: var(--do); }
+.dem { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--muc-phu); font-variant-numeric: tabular-nums; }
+.dem b { color: var(--muc); }
+.loc { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
+.loc button { flex: none; min-height: 36px; padding: 0 14px; border-radius: 99px; border: 1px solid var(--vien); background: var(--giay); color: var(--muc-phu); font: 600 13px var(--chu); cursor: pointer; }
+.loc button[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: var(--giay); }
+.trang-thai-luu { font-size: 12px; color: var(--muc-nhat); min-height: 18px; }
+.trang-thai-luu.loi { color: var(--do); font-weight: 600; }
+
+.gioi-thieu { margin-top: 16px; padding: 14px; border-radius: 12px; background: var(--giay); border: 1px solid var(--vien); font-size: 13.5px; color: var(--muc-phu); display: flex; flex-direction: column; gap: 6px; }
+.gioi-thieu p { margin: 0; }
+.lien-ket { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.lien-ket code { font-family: var(--so); font-size: 12px; background: var(--xam-nen); padding: 4px 8px; border-radius: 6px; word-break: break-all; color: var(--muc); }
+.nut-nho { min-height: 32px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--vien); background: var(--giay); color: var(--navy); font: 600 12.5px var(--chu); cursor: pointer; }
+
+.nhom { margin-top: 22px; }
+.nhom > summary { list-style: none; display: flex; align-items: baseline; gap: 10px; cursor: pointer; padding-block: 6px; }
+.nhom > summary::-webkit-details-marker { display: none; }
+.nhom > summary h2 { font-size: 16px; font-weight: 700; }
+.nhom > summary .dem-nhom { margin-left: auto; font-size: 12.5px; color: var(--muc-nhat); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.nhom > summary .mui { color: var(--muc-nhat); transition: transform .15s; }
+.nhom[open] > summary .mui { transform: rotate(90deg); }
+.ds { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+
+.ca { background: var(--giay); border: 1px solid var(--vien); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+.ca[data-kq="dat"] { border-color: var(--xanh); }
+.ca[data-kq="sai"] { border-color: var(--do); background: var(--do-nen); }
+.ca-dau { display: flex; gap: 10px; align-items: baseline; }
+.ma { font-family: var(--so); font-size: 12px; font-weight: 600; color: var(--tim); background: var(--tim-nen); padding: 2px 7px; border-radius: 6px; flex: none; }
+.viec { margin: 0; font-weight: 600; font-size: 14.5px; min-width: 0; }
+.dung { margin: 0; font-size: 13.5px; color: var(--muc-phu); }
+.dung b { color: var(--muc); font-weight: 600; }
+.chon { display: flex; gap: 8px; }
+.chon button { flex: 1; min-height: 44px; border-radius: 10px; border: 1.5px solid var(--vien); background: var(--giay); color: var(--muc-phu); font: 700 14px var(--chu); cursor: pointer; }
+.chon .nut-dat[aria-pressed="true"] { background: var(--xanh); border-color: var(--xanh); color: var(--giay); }
+.chon .nut-sai[aria-pressed="true"] { background: var(--do); border-color: var(--do); color: var(--giay); }
+.ghi-chu { display: flex; flex-direction: column; gap: 4px; }
+.ghi-chu label { font-size: 12.5px; font-weight: 600; color: var(--do); }
+.ghi-chu textarea { width: 100%; min-height: 64px; border-radius: 10px; border: 1px solid var(--vien); background: var(--giay); color: var(--muc); font: 15px var(--chu); padding: 8px 10px; resize: vertical; }
+.luc { font-size: 11.5px; color: var(--muc-nhat); }
+
+.han-che { margin-top: 26px; background: var(--giay); border: 1px solid var(--vien); border-radius: 12px; padding: 12px 14px; }
+.han-che summary { cursor: pointer; font-weight: 700; }
+.han-che ul { margin: 10px 0 0; padding-left: 18px; color: var(--muc-phu); font-size: 13.5px; display: flex; flex-direction: column; gap: 6px; }
+.trong { text-align: center; color: var(--muc-nhat); padding: 28px 0; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="dau"><div class="dau-trong">
+  <div class="ten">
+    <span class="o-ns" aria-hidden="true">NS</span>
+    <div><h1>Kiểm thử Nhân sự</h1><p>Base Vina 3 trong 1 · Giai đoạn 2 · __SO_CA__ ca</p></div>
+  </div>
+  <div class="tien-do">
+    <div class="thanh" role="img" id="thanh" aria-label="Tiến độ kiểm thử"><span class="d" id="thanh-d"></span><span class="s" id="thanh-s"></span></div>
+    <div class="dem"><span>Đạt <b id="so-dat">0</b></span><span>Sai <b id="so-sai">0</b></span><span>Chưa thử <b id="so-chua">__SO_CA__</b></span><span id="phan-tram">0% đã thử</span></div>
+  </div>
+  <div class="loc" role="group" aria-label="Lọc ca thử">
+    <button type="button" data-loc="tat-ca" aria-pressed="true">Tất cả</button>
+    <button type="button" data-loc="chua" aria-pressed="false">Chưa thử</button>
+    <button type="button" data-loc="sai" aria-pressed="false">Sai</button>
+    <button type="button" data-loc="dat" aria-pressed="false">Đạt</button>
+  </div>
+  <div class="trang-thai-luu" id="luu" aria-live="polite">Đang kết nối nơi lưu kết quả…</div>
+</div></div>
+
+<main class="khung">
+  <section class="gioi-thieu">
+    <p><b>Thử ở đâu:</b> bản xem thử của app (đăng nhập Vercel trước, rồi đăng nhập app bằng email của anh/chị + mật khẩu thử chung). Dữ liệu thử là bản chụp lúc 09:58 ngày 29/09 — thử thoải mái, không ảnh hưởng app đang chạy.</p>
+    <div class="lien-ket"><code id="link">__LINK__</code><button type="button" class="nut-nho" id="chep">Chép link</button></div>
+    <p>Mỗi ca bấm <b>Đạt</b> hoặc <b>Sai</b>. Chọn Sai thì ghi ngắn thấy gì. Kết quả tự lưu; Claude đọc được các dòng Sai để phân loại lỗi (do chép sang hay lỗi sẵn có của app cũ).</p>
+  </section>
+  <div id="danh-sach"></div>
+  <p class="trong" id="trong" hidden>Không có ca nào ở bộ lọc này.</p>
+  <details class="han-che">
+    <summary>Hạn chế đã biết của app Nhân sự gốc (không tính là lỗi)</summary>
+    <ul id="han-che"></ul>
+  </details>
+</main>
+
+<script>
+const NHOM = __NHOM__;
+const HAN_CHE = __HAN_CHE__;
+const kq = {};           // ma -> {trang_thai, ghi_chu, cap_nhat}
+let loc = "tat-ca";
+let db = null;
+
+const $ = (s, g = document) => g.querySelector(s);
+function el(tag, props = {}, ...con) { const e = document.createElement(tag); Object.assign(e, props); for (const c of con) if (c != null) e.append(c); return e; }
+function thoiGian(iso) { try { return new Date(iso).toLocaleString("vi-VN", { hour: "2-digit", minute: "2-digit", day: "2-digit", month: "2-digit" }); } catch { return ""; } }
+
+function dung(text) {
+  // In đậm con số và chữ "Bị từ chối"/"Không" trong kết quả đúng để dễ so trên điện thoại.
+  const f = document.createDocumentFragment();
+  const re = /(\*\*[^*]+\*\*)/g; let i = 0, m;
+  while ((m = re.exec(text))) { f.append(text.slice(i, m.index), el("b", { textContent: m[1].slice(2, -2) })); i = re.lastIndex; }
+  f.append(text.slice(i)); return f;
+}
+
+function veCa(c) {
+  const k = kq[c.ma] || {};
+  const the = el("article", { className: "ca" });
+  the.dataset.ma = c.ma; the.dataset.kq = k.trang_thai || "";
+  const nutDat = el("button", { type: "button", className: "nut-dat", textContent: "Đạt" });
+  const nutSai = el("button", { type: "button", className: "nut-sai", textContent: "Sai" });
+  nutDat.setAttribute("aria-pressed", String(k.trang_thai === "dat"));
+  nutSai.setAttribute("aria-pressed", String(k.trang_thai === "sai"));
+  nutDat.addEventListener("click", () => chon(c.ma, k.trang_thai === "dat" ? "" : "dat"));
+  nutSai.addEventListener("click", () => chon(c.ma, k.trang_thai === "sai" ? "" : "sai"));
+  the.append(
+    el("div", { className: "ca-dau" }, el("span", { className: "ma", textContent: c.ma }), el("p", { className: "viec", textContent: c.viec })),
+    el("p", { className: "dung" }, el("b", { textContent: "Kết quả đúng: " }), dung(c.dung)),
+    el("div", { className: "chon" }, nutDat, nutSai),
+  );
+  if (k.trang_thai === "sai") {
+    const id = "gc-" + c.ma;
+    const ta = el("textarea", { id, value: k.ghi_chu || "", placeholder: "Thấy gì? (vd: báo lỗi, số khác, không có nút…)" });
+    let hen;
+    ta.addEventListener("input", () => { clearTimeout(hen); hen = setTimeout(() => ghi(c.ma, { ghi_chu: ta.value }), 700); });
+    ta.addEventListener("blur", () => { clearTimeout(hen); if ((kq[c.ma]?.ghi_chu || "") !== ta.value) ghi(c.ma, { ghi_chu: ta.value }); });
+    the.append(el("div", { className: "ghi-chu" }, el("label", { htmlFor: id, textContent: "Ghi chú lỗi" }), ta));
+  }
+  if (k.cap_nhat) the.append(el("span", { className: "luc", textContent: "Cập nhật " + thoiGian(k.cap_nhat) }));
+  return the;
+}
+
+function hopLoc(c) {
+  const t = kq[c.ma]?.trang_thai || "";
+  return loc === "tat-ca" || (loc === "chua" && !t) || loc === t;
+}
+
+function ve() {
+  const moNhom = new Set([...document.querySelectorAll(".nhom")].filter((d) => d.open).map((d) => d.dataset.nhom));
+  const dauTien = !document.querySelector(".nhom");
+  const ds = $("#danh-sach"); ds.replaceChildren();
+  let hien = 0;
+  for (const n of NHOM) {
+    const ca = n.ca.filter(hopLoc); if (!ca.length) continue;
+    hien += ca.length;
+    const daThu = n.ca.filter((c) => kq[c.ma]?.trang_thai).length;
+    const d = el("details", { className: "nhom" });
+    d.dataset.nhom = n.ten; d.open = dauTien || loc !== "tat-ca" || moNhom.has(n.ten);
+    d.append(el("summary", {}, el("span", { className: "mui", textContent: "›", ariaHidden: "true" }), el("h2", { textContent: n.ten }),
+      el("span", { className: "dem-nhom", textContent: `${daThu}/${n.ca.length}` })),
+      el("div", { className: "ds" }, ...ca.map(veCa)));
+    ds.append(d);
+  }
+  $("#trong").hidden = hien > 0;
+  const tong = NHOM.reduce((s, n) => s + n.ca.length, 0);
+  const dat = Object.values(kq).filter((k) => k.trang_thai === "dat").length;
+  const sai = Object.values(kq).filter((k) => k.trang_thai === "sai").length;
+  $("#so-dat").textContent = dat; $("#so-sai").textContent = sai; $("#so-chua").textContent = tong - dat - sai;
+  $("#phan-tram").textContent = Math.round(((dat + sai) / tong) * 100) + "% đã thử";
+  $("#thanh-d").style.width = (dat / tong) * 100 + "%"; $("#thanh-s").style.width = (sai / tong) * 100 + "%";
+  $("#thanh").setAttribute("aria-label", `Đạt ${dat}, sai ${sai}, chưa thử ${tong - dat - sai} trên ${tong} ca`);
+}
+
+function baoLuu(chu, loi) { const e = $("#luu"); e.textContent = chu; e.classList.toggle("loi", !!loi); }
+
+async function ghi(ma, thayDoi) {
+  const moi = { ma, trang_thai: kq[ma]?.trang_thai || "", ghi_chu: kq[ma]?.ghi_chu || "", ...thayDoi, cap_nhat: new Date().toISOString() };
+  kq[ma] = moi;
+  if (!db) { baoLuu("Không kết nối được nơi lưu — kết quả vừa bấm CHƯA được lưu.", true); return; }
+  try { await db.doc("ket_qua/" + ma).set(moi); baoLuu("Đã lưu " + thoiGian(moi.cap_nhat)); }
+  catch (e) {
+    if (e?.code === "unavailable") { try { await new Promise((r) => setTimeout(r, 800 + Math.random() * 800)); await db.doc("ket_qua/" + ma).set(moi); baoLuu("Đã lưu " + thoiGian(moi.cap_nhat)); return; } catch {} }
+    baoLuu("Chưa lưu được ca " + ma + " — thử bấm lại sau ít phút.", true);
+  }
+}
+
+function chon(ma, trangThai) {
+  const ghiChu = trangThai === "sai" ? (kq[ma]?.ghi_chu || "") : "";
+  ghi(ma, { trang_thai: trangThai, ghi_chu: ghiChu });
+  ve();
+  if (trangThai === "sai") setTimeout(() => document.getElementById("gc-" + ma)?.focus(), 30);
+}
+
+for (const b of document.querySelectorAll(".loc button")) b.addEventListener("click", () => {
+  loc = b.dataset.loc;
+  for (const x of document.querySelectorAll(".loc button")) x.setAttribute("aria-pressed", String(x === b));
+  ve();
+});
+$("#chep").addEventListener("click", async () => {
+  const t = $("#link").textContent;
+  try { await navigator.clipboard.writeText(t); $("#chep").textContent = "Đã chép"; setTimeout(() => ($("#chep").textContent = "Chép link"), 1500); }
+  catch { const r = document.createRange(); r.selectNodeContents($("#link")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+});
+$("#han-che").append(...HAN_CHE.map((h) => el("li", { textContent: h })));
+ve();
+
+(async () => {
+  try { db = await window.claude?.use?.("db"); } catch { db = null; }
+  if (!db) { baoLuu("Trang này chỉ lưu kết quả khi mở trong claude.ai — hiện chưa lưu được.", true); return; }
+  baoLuu("Đang tải kết quả đã lưu…");
+  db.collection("ket_qua").onSnapshot((snap) => {
+    for (const d of snap.docs) { const v = d.data(); if (v) kq[d.id] = v; }
+    for (const ch of snap.docChanges()) if (ch.type === "removed") delete kq[ch.doc.id];
+    const dang = document.activeElement?.tagName === "TEXTAREA";
+    if (!dang) ve();
+    baoLuu(snap.metadata.fromCache ? "Đang đồng bộ…" : "Kết quả đã đồng bộ");
+  }, () => baoLuu("Mất kết nối nơi lưu — tải lại trang để tiếp tục lưu.", true));
+})();
+</script>
